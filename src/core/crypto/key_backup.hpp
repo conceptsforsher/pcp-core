@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 class MatrixClient;
 class Decryptor;
@@ -25,4 +25,4 @@ bool uploadKeyBackup(MatrixClient& client, Decryptor& decryptor,
 int restoreKeyBackup(MatrixClient& client, Decryptor& decryptor,
                      const BackupInfo& info);
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

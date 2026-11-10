@@ -1,10 +1,10 @@
-#include "progressive/room_name.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/room_name.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <cctype>
 
-namespace progressive {
+namespace pcp {
 
 // ---- Room Name Calculation ----
 // Original algorithm from matrix-js-sdk:
@@ -217,4 +217,4 @@ std::string parseCanonicalAliasContent(const std::string& contentJson) {
     return "";
 }
 
-} // namespace progressive
+} // namespace pcp

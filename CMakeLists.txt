@@ -1,5 +1,5 @@
-# progressive-core — Canonical Qt-free Matrix core (E2EE + sync + CS API).
-# Shared by progressive-desktop and progressive-cli (and future frontends).
+# pcp-core — Canonical Qt-free Matrix core (E2EE + sync + CS API).
+# Shared by pcp-desktop and pcp-cli (and future frontends).
 #
 # Build:
 #   cmake -S . -B build
@@ -7,9 +7,9 @@
 #   ctest --test-dir build
 cmake_minimum_required(VERSION 3.22)
 
-project(progressive-core
+project(pcp-core
     VERSION 0.1.0
-    DESCRIPTION "Qt-free Matrix core: E2EE (Olm/Megolm), /sync, CS API — shared by all progressive frontends"
+    DESCRIPTION "Qt-free Matrix core: E2EE (Olm/Megolm), /sync, CS API — shared by all pcp frontends"
     LANGUAGES C CXX
 )
 
@@ -28,18 +28,18 @@ configure_file(
 )
 
 # --- Options ---
-option(PROGRESSIVE_BUILD_TESTS "Build tests" ON)
-option(PROGRESSIVE_CORE_UNITY "Merge progressive_native sources into unity groups" OFF)
-option(PROGRESSIVE_CORE_USE_ARTIFACT
+option(PCP_BUILD_TESTS "Build tests" ON)
+option(PCP_CORE_UNITY "Merge pcp_native sources into unity groups" OFF)
+option(PCP_CORE_USE_ARTIFACT
        "Download a prebuilt core (per-commit GitHub release) instead of compiling" OFF)
 
 # --- Prebuilt artifact (optional) ---
-# When consumers set PROGRESSIVE_CORE_USE_ARTIFACT=ON, we try to download
-# libprogressive_native.a + libprogressive_core.a for THIS commit and THIS
+# When consumers set PCP_CORE_USE_ARTIFACT=ON, we try to download
+# libpcp_native.a + libpcp_core.a for THIS commit and THIS
 # architecture from the core-<sha> release. On any failure we silently fall
 # back to building from source. Headers always come from the fetched source.
-set(PROGRESSIVE_CORE_ARTIFACT_USED OFF CACHE BOOL "" FORCE)
-if(PROGRESSIVE_CORE_USE_ARTIFACT)
+set(PCP_CORE_ARTIFACT_USED OFF CACHE BOOL "" FORCE)
+if(PCP_CORE_USE_ARTIFACT)
     if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|arm64|ARM64")
         set(CORE_ARTIFACT_ARCH "aarch64")
     else()
@@ -52,8 +52,8 @@ if(PROGRESSIVE_CORE_USE_ARTIFACT)
         RESULT_VARIABLE CORE_SHA_RC)
     if(CORE_SHA_RC EQUAL 0 AND CORE_SHA)
         set(CORE_ARTIFACT_URL
-            "https://github.com/progressive-chat/progressive-core/releases/download/core-${CORE_SHA}/progressive-core-${CORE_ARTIFACT_ARCH}.tar.gz")
-        set(CORE_ARTIFACT_DIR "${CMAKE_BINARY_DIR}/progressive-core-artifact")
+            "https://github.com/pcp-chat/pcp-core/releases/download/core-${CORE_SHA}/pcp-core-${CORE_ARTIFACT_ARCH}.tar.gz")
+        set(CORE_ARTIFACT_DIR "${CMAKE_BINARY_DIR}/pcp-core-artifact")
         file(MAKE_DIRECTORY "${CORE_ARTIFACT_DIR}")
         file(DOWNLOAD "${CORE_ARTIFACT_URL}" "${CORE_ARTIFACT_DIR}/core.tar.gz"
              STATUS CORE_DL_STATUS TLS_VERIFY ON TIMEOUT 60)
@@ -62,22 +62,22 @@ if(PROGRESSIVE_CORE_USE_ARTIFACT)
             file(MAKE_DIRECTORY "${CORE_ARTIFACT_DIR}/out")
             execute_process(COMMAND tar xzf "${CORE_ARTIFACT_DIR}/core.tar.gz" -C "${CORE_ARTIFACT_DIR}/out"
                             RESULT_VARIABLE CORE_TAR_RC)
-            if(CORE_TAR_RC EQUAL 0 AND EXISTS "${CORE_ARTIFACT_DIR}/out/libprogressive_core.a")
-                add_library(progressive_native STATIC IMPORTED GLOBAL)
-                set_target_properties(progressive_native PROPERTIES
-                    IMPORTED_LOCATION "${CORE_ARTIFACT_DIR}/out/libprogressive_native.a"
+            if(CORE_TAR_RC EQUAL 0 AND EXISTS "${CORE_ARTIFACT_DIR}/out/libpcp_core.a")
+                add_library(pcp_native STATIC IMPORTED GLOBAL)
+                set_target_properties(pcp_native PROPERTIES
+                    IMPORTED_LOCATION "${CORE_ARTIFACT_DIR}/out/libpcp_native.a"
                     INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/native/include")
-                add_library(progressive_core STATIC IMPORTED GLOBAL)
-                set_target_properties(progressive_core PROPERTIES
-                    IMPORTED_LOCATION "${CORE_ARTIFACT_DIR}/out/libprogressive_core.a"
+                add_library(pcp_core STATIC IMPORTED GLOBAL)
+                set_target_properties(pcp_core PROPERTIES
+                    IMPORTED_LOCATION "${CORE_ARTIFACT_DIR}/out/libpcp_core.a"
                     INTERFACE_INCLUDE_DIRECTORIES
                         "${CMAKE_CURRENT_SOURCE_DIR}/src;${CMAKE_CURRENT_BINARY_DIR}/generated")
-                set(PROGRESSIVE_CORE_ARTIFACT_USED ON CACHE BOOL "" FORCE)
-                message(STATUS "progressive-core: using prebuilt artifact (${CORE_ARTIFACT_ARCH}, ${CORE_SHA})")
+                set(PCP_CORE_ARTIFACT_USED ON CACHE BOOL "" FORCE)
+                message(STATUS "pcp-core: using prebuilt artifact (${CORE_ARTIFACT_ARCH}, ${CORE_SHA})")
             endif()
         endif()
-        if(NOT PROGRESSIVE_CORE_ARTIFACT_USED)
-            message(STATUS "progressive-core: artifact not available (sha=${CORE_SHA} arch=${CORE_ARTIFACT_ARCH}) — building from source")
+        if(NOT PCP_CORE_ARTIFACT_USED)
+            message(STATUS "pcp-core: artifact not available (sha=${CORE_SHA} arch=${CORE_ARTIFACT_ARCH}) — building from source")
         endif()
     endif()
 endif()
@@ -85,8 +85,8 @@ endif()
 # --- libcurl (HTTP client with TLS + SOCKS5/Tor proxy) ---
 find_package(CURL REQUIRED COMPONENTS HTTPS)
 
-# --- Vendored progressive_native (built from native/ + native_shim/) ---
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/progressive_native.cmake)
+# --- Vendored pcp_native (built from native/ + native_shim/) ---
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/pcp_native.cmake)
 
 # --- The core library ---
 find_package(SQLite3 REQUIRED)
@@ -112,8 +112,8 @@ if(TARGET SQLite3::SQLite3)
     set(_sqlite_target SQLite3::SQLite3)
 endif()
 
-if(NOT PROGRESSIVE_CORE_ARTIFACT_USED)
-add_library(progressive_core STATIC
+if(NOT PCP_CORE_ARTIFACT_USED)
+add_library(pcp_core STATIC
     src/core/http_client.cpp
     src/core/json_utils.cpp
     src/core/matrix_client.cpp
@@ -142,26 +142,26 @@ add_library(progressive_core STATIC
     src/core/crypto/backup_crypto.cpp
     src/core/crypto/decryptor.cpp
 )
-target_include_directories(progressive_core PUBLIC
+target_include_directories(pcp_core PUBLIC
     src
     ${CMAKE_CURRENT_BINARY_DIR}/generated
 )
 
-target_link_libraries(progressive_core PUBLIC
-    progressive_native
+target_link_libraries(pcp_core PUBLIC
+    pcp_native
     CURL::libcurl
     ${_sqlite_target}
     simdjson::simdjson
     PkgConfig::SODIUM
     OpenSSL::Crypto
 )
-endif()  # NOT PROGRESSIVE_CORE_ARTIFACT_USED
+endif()  # NOT PCP_CORE_ARTIFACT_USED
 
-if(PROGRESSIVE_CORE_ARTIFACT_USED)
+if(PCP_CORE_ARTIFACT_USED)
     # Deferred: the dep targets only exist after the block above.
-    target_link_libraries(progressive_native INTERFACE olm)
-    target_link_libraries(progressive_core INTERFACE
-        progressive_native
+    target_link_libraries(pcp_native INTERFACE olm)
+    target_link_libraries(pcp_core INTERFACE
+        pcp_native
         CURL::libcurl
         ${_sqlite_target}
         simdjson::simdjson
@@ -170,74 +170,74 @@ if(PROGRESSIVE_CORE_ARTIFACT_USED)
 endif()
 
 # --- Tests (Qt-free — the reason this repo exists) ---
-if(PROGRESSIVE_BUILD_TESTS)
+if(PCP_BUILD_TESTS)
     enable_testing()
 
     # The vendored native modules rely on the Android log shim (the same way
-    # the desktop's tests force-include progressive_compat.h).
-    set(PN_SHIM "${CMAKE_CURRENT_SOURCE_DIR}/native_shim/progressive_compat.h")
+    # the desktop's tests force-include pcp_compat.h).
+    set(PN_SHIM "${CMAKE_CURRENT_SOURCE_DIR}/native_shim/pcp_compat.h")
 
     add_executable(test_sync_applier tests/test_sync_applier.cpp)
-    target_link_libraries(test_sync_applier PRIVATE progressive_core)
+    target_link_libraries(test_sync_applier PRIVATE pcp_core)
     add_test(NAME sync_applier COMMAND test_sync_applier)
 
     add_executable(test_register_flows tests/test_register_flows.cpp)
-    target_link_libraries(test_register_flows PRIVATE progressive_core)
+    target_link_libraries(test_register_flows PRIVATE pcp_core)
     add_test(NAME register_flows COMMAND test_register_flows)
 
     add_executable(test_mas_auth tests/test_mas_auth.cpp)
-    target_link_libraries(test_mas_auth PRIVATE progressive_core)
+    target_link_libraries(test_mas_auth PRIVATE pcp_core)
     target_compile_options(test_mas_auth PRIVATE -include "${PN_SHIM}")
     add_test(NAME mas_auth COMMAND test_mas_auth)
 
     add_executable(test_media_crypto tests/test_media_crypto.cpp)
-    target_link_libraries(test_media_crypto PRIVATE progressive_core)
+    target_link_libraries(test_media_crypto PRIVATE pcp_core)
     add_test(NAME media_crypto COMMAND test_media_crypto)
 
     add_executable(test_phase1 tests/test_phase1.cpp)
-    target_link_libraries(test_phase1 PRIVATE progressive_core)
+    target_link_libraries(test_phase1 PRIVATE pcp_core)
     target_compile_options(test_phase1 PRIVATE -include "${PN_SHIM}")
     add_test(NAME phase1 COMMAND test_phase1)
 
     add_executable(test_olm_inbound tests/test_olm_inbound.cpp)
-    target_link_libraries(test_olm_inbound PRIVATE progressive_core)
+    target_link_libraries(test_olm_inbound PRIVATE pcp_core)
     target_compile_options(test_olm_inbound PRIVATE -include "${PN_SHIM}")
     add_test(NAME olm_inbound COMMAND test_olm_inbound)
 
     add_executable(test_megolm_inbound tests/test_megolm_inbound.cpp)
-    target_link_libraries(test_megolm_inbound PRIVATE progressive_core)
+    target_link_libraries(test_megolm_inbound PRIVATE pcp_core)
     target_compile_options(test_megolm_inbound PRIVATE -include "${PN_SHIM}")
     add_test(NAME megolm_inbound COMMAND test_megolm_inbound)
 
     add_executable(test_e2ee_account tests/test_e2ee_account.cpp)
-    target_link_libraries(test_e2ee_account PRIVATE progressive_core)
+    target_link_libraries(test_e2ee_account PRIVATE pcp_core)
     target_compile_options(test_e2ee_account PRIVATE -include "${PN_SHIM}")
     add_test(NAME e2ee_account COMMAND test_e2ee_account)
 
     add_executable(test_e2ee_otk_count tests/test_e2ee_otk_count.cpp)
-    target_link_libraries(test_e2ee_otk_count PRIVATE progressive_core)
+    target_link_libraries(test_e2ee_otk_count PRIVATE pcp_core)
     target_compile_options(test_e2ee_otk_count PRIVATE -include "${PN_SHIM}")
     add_test(NAME e2ee_otk_count COMMAND test_e2ee_otk_count)
 
     add_executable(test_e2ee_sas tests/test_e2ee_sas.cpp)
-    target_link_libraries(test_e2ee_sas PRIVATE progressive_core)
+    target_link_libraries(test_e2ee_sas PRIVATE pcp_core)
     target_compile_options(test_e2ee_sas PRIVATE -include "${PN_SHIM}")
     add_test(NAME e2ee_sas COMMAND test_e2ee_sas)
 
     add_executable(test_e2ee_verify_protocol tests/test_e2ee_verify_protocol.cpp)
-    target_link_libraries(test_e2ee_verify_protocol PRIVATE progressive_core)
+    target_link_libraries(test_e2ee_verify_protocol PRIVATE pcp_core)
     target_compile_options(test_e2ee_verify_protocol PRIVATE -include "${PN_SHIM}")
     add_test(NAME e2ee_verify_protocol COMMAND test_e2ee_verify_protocol)
 
     add_executable(test_e2ee_store tests/test_e2ee_store.cpp)
-    target_link_libraries(test_e2ee_store PRIVATE progressive_core)
+    target_link_libraries(test_e2ee_store PRIVATE pcp_core)
     target_compile_options(test_e2ee_store PRIVATE -include "${PN_SHIM}")
     add_test(NAME e2ee_store COMMAND test_e2ee_store)
 
     # Live-Synapse E2EE integration test (CI: synapse-e2ee workflow).
     # Skips gracefully when no server is reachable (no SYNAPSE_URL set).
     add_executable(test_synapse_e2ee tests/test_synapse_e2ee.cpp)
-    target_link_libraries(test_synapse_e2ee PRIVATE progressive_core)
+    target_link_libraries(test_synapse_e2ee PRIVATE pcp_core)
     target_compile_options(test_synapse_e2ee PRIVATE -include "${PN_SHIM}")
     add_test(NAME synapse_e2ee COMMAND test_synapse_e2ee)
     set_tests_properties(synapse_e2ee PROPERTIES TIMEOUT 120)

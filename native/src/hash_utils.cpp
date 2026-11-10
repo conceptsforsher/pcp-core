@@ -1,10 +1,10 @@
-#include "progressive/hash_utils.hpp"
+#include "pcp/hash_utils.hpp"
 #include <sstream>
 #include <iomanip>
 #include <cstring>
 #include <random>
 
-namespace progressive {
+namespace pcp {
 
 // ---- SHA-256 implementation ----
 
@@ -280,4 +280,4 @@ std::string hashEventContent(const std::string& eventJson) {
     return sha256Hex(eventJson);
 }
 
-} // namespace progressive
+} // namespace pcp

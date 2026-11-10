@@ -1,9 +1,9 @@
-#include "progressive/event_timeline_helper.hpp"
+#include "pcp/event_timeline_helper.hpp"
 #include <sstream>
 #include <chrono>
 #include <ctime>
 
-namespace progressive {
+namespace pcp {
 
 std::vector<TimelineEventMeta> computeTimelineGroups(
     const std::vector<std::string>& eventIds,
@@ -102,4 +102,4 @@ std::string getRelativeTime(int64_t ms) {
     return formatTimelineHeader(ms);
 }
 
-} // namespace progressive
+} // namespace pcp

@@ -1,7 +1,7 @@
 // src/core/tls_bridge_stub.cpp — Desktop stub for the Android TLS bridge.
 //
-// progressive_native's http_client.cpp and matrix_api.cpp reference
-// progressive::tlsBridgeAvailable()/tlsBridgeRequest() (the Android JNI
+// pcp_native's http_client.cpp and matrix_api.cpp reference
+// pcp::tlsBridgeAvailable()/tlsBridgeRequest() (the Android JNI
 // TLS bridge, tls_bridge.cpp — excluded from desktop builds). The normal
 // build never pulls those members, so the references stay dormant; the
 // unity build merges them into a member that IS pulled, surfacing the
@@ -9,9 +9,9 @@
 // libcurl/OpenSSL directly, so the bridge is simply unavailable.
 #include <string>
 
-#include <progressive/tls_bridge.hpp>
+#include <pcp/tls_bridge.hpp>
 
-namespace progressive {
+namespace pcp {
 
 bool tlsBridgeAvailable() {
     return false;
@@ -22,4 +22,4 @@ std::string tlsBridgeRequest(const std::string& /*host*/, int /*port*/,
     return {};
 }
 
-}  // namespace progressive
+}  // namespace pcp

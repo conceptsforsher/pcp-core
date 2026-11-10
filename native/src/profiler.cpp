@@ -1,10 +1,10 @@
-#include "progressive/profiler.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/profiler.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <iomanip>
 
-namespace progressive {
+namespace pcp {
 
 // ====== High-resolution timer ======
 
@@ -266,7 +266,7 @@ std::string Profiler::reportToText() const {
     auto report = generateReport();
     std::ostringstream os;
 
-    os << "=== Progressive Chat Native Profiler ===\n";
+    os << "=== PCP Native Profiler ===\n";
     os << "Profiling: " << (report.isProfiling ? "ACTIVE" : "stopped") << "\n";
     os << "Total time: " << formatNs(report.totalTimeNs) << "\n";
     os << "Overhead: " << formatNs(report.overheadNs) << "\n";
@@ -645,4 +645,4 @@ std::string Profiler::colorForFps(double fps) {
     return "#F44336";                      // Red: slideshow
 }
 
-} // namespace progressive
+} // namespace pcp

@@ -1,12 +1,12 @@
-#include "progressive/server_notice_manager.hpp"
-#include "progressive/string_utils.hpp"
-#include "progressive/room_content.hpp"
+#include "pcp/server_notice_manager.hpp"
+#include "pcp/string_utils.hpp"
+#include "pcp/room_content.hpp"
 #include <sstream>
 #include <algorithm>
 #include <ctime>
 #include <unordered_set>
 
-namespace progressive {
+namespace pcp {
 
 // ====== Enum conversions ======
 
@@ -639,4 +639,4 @@ void recordConsent(const std::string& noticeId, const std::string& consentVersio
     g_consentRecords[noticeId] = consent;
 }
 
-} // namespace progressive
+} // namespace pcp

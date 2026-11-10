@@ -1,9 +1,9 @@
-#include "progressive/transparent_overlay.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/transparent_overlay.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <cmath>
 
-namespace progressive {
+namespace pcp {
 
 // ====== Constructor ======
 
@@ -385,4 +385,4 @@ std::string TransparentOverlayEngine::safetyToJson() const {
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

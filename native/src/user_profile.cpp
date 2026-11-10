@@ -1,8 +1,8 @@
-#include "progressive/user_profile.hpp"
+#include "pcp/user_profile.hpp"
 #include <sstream>
 #include <chrono>
 
-namespace progressive {
+namespace pcp {
 
 static std::string extractField(const std::string& json, const std::string& key) {
     auto p = json.find("\"" + key + "\":\"");
@@ -81,4 +81,4 @@ std::string extractDisplayName(const std::string& memberEventJson, const std::st
     return formatDisplayName("", userId);
 }
 
-} // namespace progressive
+} // namespace pcp

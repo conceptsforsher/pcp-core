@@ -1,11 +1,11 @@
-#include "progressive/session_manager.hpp"
-#include "progressive/string_utils.hpp"
-#include "progressive/json_parser.hpp"
+#include "pcp/session_manager.hpp"
+#include "pcp/string_utils.hpp"
+#include "pcp/json_parser.hpp"
 #include <sstream>
 #include <algorithm>
 #include <chrono>
 
-namespace progressive {
+namespace pcp {
 
 SessionList computeSessionList(const std::vector<SessionInfo>& sessions,
     const std::string& activeUserId) {
@@ -140,4 +140,4 @@ std::string sessionListToJson(const SessionList& list) {
     return json.str();
 }
 
-} // namespace progressive
+} // namespace pcp

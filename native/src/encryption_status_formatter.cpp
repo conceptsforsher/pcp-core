@@ -1,7 +1,7 @@
-#include "progressive/encryption_status_formatter.hpp"
+#include "pcp/encryption_status_formatter.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 EncryptionShield getRoomShield(bool allVerified, bool someVerified) {
     if (allVerified) return {ShieldType::GREEN,  "\xF0\x9F\x9F\xA2", "#4CAF50", "Verified"};
@@ -37,4 +37,4 @@ std::string getShieldDescription(const EncryptionShield& s) {
     return s.label;
 }
 
-} // namespace progressive
+} // namespace pcp

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 // Standard base58 (Bitcoin alphabet).
 std::string base58Encode(const std::vector<uint8_t>& data);
@@ -28,4 +28,4 @@ struct BackupKeyPair {
 };
 BackupKeyPair deriveBackupKey(const std::vector<uint8_t>& seedB64);
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

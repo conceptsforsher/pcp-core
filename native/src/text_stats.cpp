@@ -1,7 +1,7 @@
-#include "progressive/text_stats.hpp"
+#include "pcp/text_stats.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 TextStats computeTextStats(const std::string& text) {
     TextStats s;
@@ -30,4 +30,4 @@ int estimateReadTimeMs(const std::string& text) {
     return computeTextStats(text).estimatedReadTimeSec * 1000;
 }
 
-} // namespace progressive
+} // namespace pcp

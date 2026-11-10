@@ -8,7 +8,7 @@
 
 #include <simdjson.h>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 
 // Parse a decrypted Megolm plaintext JSON into type + content JSON.
@@ -429,4 +429,4 @@ bool SyncApplier::decryptEventToDisplayed(const FastEvent& fe, DisplayedEvent& d
     return true;
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

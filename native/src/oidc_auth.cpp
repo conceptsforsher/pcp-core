@@ -1,13 +1,13 @@
-#include "progressive/oidc_auth.hpp"
-#include "progressive/olm.hpp"
-#include "progressive/http_client.hpp"
-#include "progressive/crypto_algorithms.hpp"
-#include "progressive/graph_utils.hpp"
+#include "pcp/oidc_auth.hpp"
+#include "pcp/olm.hpp"
+#include "pcp/http_client.hpp"
+#include "pcp/crypto_algorithms.hpp"
+#include "pcp/graph_utils.hpp"
 #include <sstream>
 #include <cstdlib>
 #include <ctime>
 
-namespace progressive {
+namespace pcp {
 
 // ==== Simple PRNG for CSRF state and PKCE (not cryptographically strong, but sufficient) ====
 
@@ -336,4 +336,4 @@ std::string generateOAuthState() {
     return randomString(32);
 }
 
-} // namespace progressive
+} // namespace pcp

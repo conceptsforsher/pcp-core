@@ -10,7 +10,7 @@
 
 #include "olm_account.hpp"
 #include "megolm_store.hpp"
-#include <progressive/room_encryption.hpp>
+#include <pcp/room_encryption.hpp>
 #include <memory>
 #include <string>
 #include <vector>
@@ -20,7 +20,7 @@
 #include <unordered_set>
 #include <functional>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 struct DecryptionResult {
     bool ok = false;
@@ -368,7 +368,7 @@ private:
     std::unique_ptr<MegolmStore> megolm_;
     // Per-room outbound megolm sessions.
     std::unordered_map<std::string, OutboundMegolmSession> outboundSessions_;
-    std::map<std::string, progressive::EncryptionConfig> roomEncryptionConfigs_;
+    std::map<std::string, pcp::EncryptionConfig> roomEncryptionConfigs_;
     mutable std::mutex outboundMtx_;
     // Inbound Olm 1:1 sessions, keyed by (senderCurve25519).
     // We store them as pickled strings; created on-demand from pre-key messages.
@@ -455,4 +455,4 @@ private:
     void sendRequestCancellation(const KeyRequestState& st);
 };
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

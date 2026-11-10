@@ -2,13 +2,13 @@
 // sqlite_store.cpp — SQLite implementation replacing Realm database
 // ============================================================================
 
-#include "progressive/sqlite_store.hpp"
+#include "pcp/sqlite_store.hpp"
 #include <sqlite3.h>
 #include <cstdio>
 #include <cstring>
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 // ============================================================================
 // SqliteStore implementation
@@ -1197,4 +1197,4 @@ std::string SqliteStore::exportJson() {
     return "{\"ok\":true}";
 }
 
-} // namespace progressive
+} // namespace pcp

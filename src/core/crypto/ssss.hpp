@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 // Derive the AES-256 + HMAC-SHA256 keys from the recovery seed + key id:
 // HKDF-SHA256(ikm = seed, salt = keyId, info = "m.secret_storage.v1.aes-hmac-sha2")
@@ -39,4 +39,4 @@ bool verifySsssRecoveryKey(const std::string& metadataJson,
 // A random key id (unpadded base64 of 24 random bytes, 32 chars).
 std::string generateSsssKeyId();
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

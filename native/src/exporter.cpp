@@ -1,10 +1,10 @@
-#include "progressive/exporter.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/exporter.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <ctime>
 #include <cstring>
 
-namespace progressive {
+namespace pcp {
 
 std::string formatEventHtml(const ExportEvent& event, bool isContinuation) {
     std::ostringstream html;
@@ -158,7 +158,7 @@ hr { border: none; border-top: 1px solid #e0e0e0; margin: 16px 0; }
         prevSender = event.senderId;
     }
 
-    html << "<hr>\n<p style=\"color:#999;text-align:center;\">Exported with Progressive Chat</p>\n";
+    html << "<hr>\n<p style=\"color:#999;text-align:center;\">Exported with PCP</p>\n";
     html << "</body>\n</html>";
     return html.str();
 }
@@ -214,4 +214,4 @@ std::string buildJsonDocument(
     return json.str();
 }
 
-} // namespace progressive
+} // namespace pcp

@@ -6,7 +6,7 @@
 #include <vector>
 #include <simdjson.h>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 namespace {
 
@@ -92,4 +92,4 @@ std::string buildBackupSessionEntry(const std::string& sessionDataJson,
         + ",\"session_data\":" + sessionDataJson + "}";
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

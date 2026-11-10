@@ -1,15 +1,15 @@
-#include "progressive/test_provider.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/test_provider.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <ctime>
 
-namespace progressive {
+namespace pcp {
 
 TestProvider::TestProvider() { initTestData(); }
 
 void TestProvider::initTestData() {
     rooms_ = {
-        {"!test1:localhost", "General Chat", "Welcome to Progressive Chat — test mode", "", 5, 3, false,
+        {"!test1:localhost", "General Chat", "Welcome to PCP — test mode", "", 5, 3, false,
          "Hey everyone! Welcome to the test room 👋", "2026-05-30T10:00:00Z"},
         {"!test2:localhost", "Encrypted Room 🔒", "This room is end-to-end encrypted", "", 3, 0, true,
          "This room is encrypted. Your messages are safe.", "2026-05-30T09:30:00Z"},
@@ -18,7 +18,7 @@ void TestProvider::initTestData() {
         {"!test4:localhost", "Announcements 📢", "Important updates and news", "", 10, 0, false,
          "Server maintenance scheduled for tonight", "2026-05-29T18:00:00Z"},
         {"!test5:localhost", "Random / Off-Topic", "Anything goes. Share memes and fun stuff.", "", 8, 2, false,
-         "Check out this cool project: https://progressive.chat", "2026-05-30T08:00:00Z"}
+         "Check out this cool project: https://pcp.chat", "2026-05-30T08:00:00Z"}
     };
 
     messages_ = {
@@ -44,7 +44,7 @@ void TestProvider::initTestData() {
         {"$ev16", "!test4:localhost", "@admin:localhost", "Admin", "Server maintenance scheduled for tonight at 02:00 UTC", "2026-05-29T18:00:00Z", 1748548800, false, false, "m.text"},
         {"$ev17", "!test4:localhost", "@admin:localhost", "Admin", "Expected downtime: 15 minutes. All services will be back online by 02:15 UTC.", "2026-05-29T18:01:00Z", 1748548860, false, false, "m.text"},
         // Room 5
-        {"$ev18", "!test5:localhost", "@grace:localhost", "Grace", "Check out this cool project: https://progressive.chat", "2026-05-30T08:00:00Z", 1748594400, false, false, "m.text"},
+        {"$ev18", "!test5:localhost", "@grace:localhost", "Grace", "Check out this cool project: https://pcp.chat", "2026-05-30T08:00:00Z", 1748594400, false, false, "m.text"},
         {"$ev19", "!test5:localhost", "@heidi:localhost", "Heidi", "Nice! I've been using it for a while. The C++ native core is really fast.", "2026-05-30T08:05:00Z", 1748594700, false, false, "m.text"},
         {"$ev20", "!test5:localhost", "@ivan:localhost", "Ivan", "Has anyone tried the new encrypted search feature? It works with encrypted rooms!", "2026-05-30T08:10:00Z", 1748595000, false, false, "m.text"}
     };
@@ -143,4 +143,4 @@ std::string TestProvider::getProfileJson() const {
            "}";
 }
 
-} // namespace progressive
+} // namespace pcp

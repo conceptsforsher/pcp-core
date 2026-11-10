@@ -1,12 +1,12 @@
-#include "progressive/displayname_utils.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/displayname_utils.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <iomanip>
 #include <cctype>
 #include <algorithm>
 #include <unordered_set>
 
-namespace progressive {
+namespace pcp {
 
 std::string userIdToDisplayName(const std::string& userId, bool capitalize) {
     // Extract localpart: @alice_johnson:matrix.org → alice_johnson
@@ -237,4 +237,4 @@ std::string formatDisplayNameChange(const DisplayNameChange& change) {
     if (change.newName.empty()) return "(removed)";
     return change.oldName + " → " + change.newName;
 }
-} // namespace progressive
+} // namespace pcp

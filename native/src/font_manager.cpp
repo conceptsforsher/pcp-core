@@ -1,5 +1,5 @@
-#include "progressive/font_manager.hpp"
-#include "progressive/json_parser.hpp"
+#include "pcp/font_manager.hpp"
+#include "pcp/json_parser.hpp"
 #include <string>
 #include <sstream>
 #include <regex>
@@ -8,9 +8,9 @@
 #include <vector>
 #include <map>
 
-using progressive::parseJsonStringValue;
-using progressive::parseJsonBoolValue;
-using progressive::parseJsonInt64Value;
+using pcp::parseJsonStringValue;
+using pcp::parseJsonBoolValue;
+using pcp::parseJsonInt64Value;
 
 std::string getFontScale(const std::string& json) {
     std::ostringstream o;

@@ -1,7 +1,7 @@
-#include "progressive/event_pagination.hpp"
+#include "pcp/event_pagination.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 std::string buildPaginationRequest(const PaginationToken& token) {
     std::ostringstream os;
@@ -69,4 +69,4 @@ std::string formatPaginationProgress(int loaded, int total, PaginationDirection 
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

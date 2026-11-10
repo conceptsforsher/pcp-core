@@ -1,9 +1,9 @@
-#include "progressive/room_permissions_manager.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/room_permissions_manager.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 // ====== Enum ======
 
@@ -315,4 +315,4 @@ std::string RoomPermissionsManager::roleToJson(const std::string& userId, int po
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

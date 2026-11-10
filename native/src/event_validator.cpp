@@ -1,12 +1,12 @@
-#include "progressive/event_validator.hpp"
-#include "progressive/string_utils.hpp"
-#include "progressive/json_parser.hpp"
-#include "progressive/matrix_patterns.hpp"
+#include "pcp/event_validator.hpp"
+#include "pcp/string_utils.hpp"
+#include "pcp/json_parser.hpp"
+#include "pcp/matrix_patterns.hpp"
 #include <sstream>
 #include <algorithm>
 #include <chrono>
 
-namespace progressive {
+namespace pcp {
 
 bool isValidEventId(const std::string& eventId) {
     return isEventId(eventId);
@@ -347,4 +347,4 @@ EventValidationResult validateEncryptedEvent(const std::string& eventJson) {
     return result;
 }
 
-} // namespace progressive
+} // namespace pcp

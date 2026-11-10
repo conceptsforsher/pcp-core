@@ -1,8 +1,8 @@
-#include "progressive/smart_reply.hpp"
+#include "pcp/smart_reply.hpp"
 #include <sstream>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 std::string buildSmartReplyPrompt(const MessageContext& ctx) {
     std::ostringstream os;
@@ -127,4 +127,4 @@ bool isAcknowledgment(const std::string& text) {
            lower.find("got it") != std::string::npos;
 }
 
-} // namespace progressive
+} // namespace pcp

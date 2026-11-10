@@ -4,7 +4,7 @@
 
 #include <algorithm>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 namespace {
 // 5-minute same-sender merge window (view-grouping semantics — see the hpp).
@@ -295,4 +295,4 @@ DisplayedEvent* TimelineState::at(int row) {
     return &events_[static_cast<size_t>(row)];
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

@@ -1,9 +1,9 @@
-#include "progressive/weather_utils.hpp"
-#include "progressive/url_tools.hpp"
+#include "pcp/weather_utils.hpp"
+#include "pcp/url_tools.hpp"
 #include <sstream>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 
 std::string buildWeatherUrl(const std::string& location, const std::string& apiToken) {
@@ -162,4 +162,4 @@ std::string formatWeatherForAlarm(const std::string& location, const std::string
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

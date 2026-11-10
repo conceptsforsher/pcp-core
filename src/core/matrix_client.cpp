@@ -5,12 +5,12 @@
 #include "core/debug_log.hpp"
 #include "core/crypto/media_crypto.hpp"
 
-#include <progressive/login_flow.hpp>
-#include <progressive/matrix_error.hpp>
-#include <progressive/sync_models.hpp>
-#include <progressive/well_known.hpp>
-#include <progressive/json_parser.hpp>
-#include <progressive/content_utils.hpp>
+#include <pcp/login_flow.hpp>
+#include <pcp/matrix_error.hpp>
+#include <pcp/sync_models.hpp>
+#include <pcp/well_known.hpp>
+#include <pcp/json_parser.hpp>
+#include <pcp/content_utils.hpp>
 
 #include <simdjson.h>
 #include <sstream>
@@ -18,7 +18,7 @@
 #include <atomic>
 #include <ctime>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 namespace {
 
@@ -100,16 +100,16 @@ std::string buildLoginBody(const std::string& username,
 }
 
 // Parse POST /login response → AccountInfo.
-// Uses progressive::parseJsonStringValue for the top-level fields.
-// (parseCredentials isn't a single public function in progressive_native;
+// Uses pcp::parseJsonStringValue for the top-level fields.
+// (parseCredentials isn't a single public function in pcp_native;
 //  the JSON is simple enough to read directly.)
 AccountInfo parseLoginResponse(const std::string& json,
                                 const std::string& homeserverUrl) {
     AccountInfo a;
-    a.userId        = progressive::parseJsonStringValue(json, "user_id");
-    a.accessToken   = progressive::parseJsonStringValue(json, "access_token");
-    a.refreshToken  = progressive::parseJsonStringValue(json, "refresh_token");
-    a.deviceId      = progressive::parseJsonStringValue(json, "device_id");
+    a.userId        = pcp::parseJsonStringValue(json, "user_id");
+    a.accessToken   = pcp::parseJsonStringValue(json, "access_token");
+    a.refreshToken  = pcp::parseJsonStringValue(json, "refresh_token");
+    a.deviceId      = pcp::parseJsonStringValue(json, "device_id");
     a.homeserverUrl = homeserverUrl;
     return a;
 }
@@ -147,13 +147,13 @@ std::string genTxnId(const std::string& prefix) {
 ApiResult<std::string> MatrixClient::discoverHomeserver(const std::string& userInput) {
     ApiResult<std::string> r;
     // Step 1: format the user input as a URL.
-    std::string url = progressive::formatServerUrl(userInput);
+    std::string url = pcp::formatServerUrl(userInput);
 
     // Step 2: try .well-known
     auto resp = httpGet(url + "/.well-known/matrix/client",
                         {{"Accept", "application/json"}}, 10000);
     if (resp.success) {
-        auto d = progressive::parseServerDiscovery(resp.body);
+        auto d = pcp::parseServerDiscovery(resp.body);
         if (d.isValid && !d.homeserverBaseUrl.empty()) {
             r.ok = true;
             r.data = d.homeserverBaseUrl;
@@ -182,14 +182,14 @@ ApiResult<std::string> MatrixClient::getVersions() {
         r.ok = true;
         r.data = resp.body;
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
 }
 
-ApiResult<progressive::LoginAuthFlowsResult> MatrixClient::getLoginFlows() {
-    ApiResult<progressive::LoginAuthFlowsResult> r;
+ApiResult<pcp::LoginAuthFlowsResult> MatrixClient::getLoginFlows() {
+    ApiResult<pcp::LoginAuthFlowsResult> r;
     if (account().homeserverUrl.empty()) {
         r.error.message = "no homeserver URL set";
         return r;
@@ -198,10 +198,10 @@ ApiResult<progressive::LoginAuthFlowsResult> MatrixClient::getLoginFlows() {
                         authHeaders(), 10000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseLoginFlows(resp.body);
+        r.data = pcp::parseLoginFlows(resp.body);
         r.ok = true;
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -226,11 +226,11 @@ ApiResult<AccountInfo> MatrixClient::loginWithPassword(const std::string& userna
             setAccount(r.data);
             r.ok = true;
         } else {
-            r.error.code = progressive::ErrorCode::M_UNKNOWN;
+            r.error.code = pcp::ErrorCode::M_UNKNOWN;
             r.error.message = "login response missing user_id or access_token";
         }
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -249,7 +249,7 @@ ApiResult<bool> MatrixClient::logout() {
     r.ok = resp.success;
     r.data = resp.success;
     if (!resp.success && !resp.body.empty()) {
-        r.error = progressive::parseMatrixErrorJson(resp.body);
+        r.error = pcp::parseMatrixErrorJson(resp.body);
     }
     // Clear local state regardless of server response.
     setAccount(AccountInfo{});
@@ -278,7 +278,7 @@ ApiResult<AccountInfo> MatrixClient::refreshAccessToken(const std::string& refre
         r.ok = r.data.isValid();
         if (!r.ok) r.error.message = "refresh response missing access_token";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -327,11 +327,11 @@ ApiResult<std::string> MatrixClient::sendMessage(const std::string& roomId,
     auto resp = httpPut(url.str(), jsonBody.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseJsonStringValue(resp.body, "event_id");
+        r.data = pcp::parseJsonStringValue(resp.body, "event_id");
         r.ok = !r.data.empty();
         if (!r.ok) r.error.message = "send: no event_id in response";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -356,7 +356,7 @@ ApiResult<std::string> MatrixClient::getMessages(const std::string& roomId,
         r.ok = true;
         r.data = resp.body;
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -381,7 +381,7 @@ ApiResult<bool> MatrixClient::setReadMarker(const std::string& roomId,
     r.ok = resp.success;
     r.data = resp.success;
     if (!resp.success && !resp.body.empty()) {
-        r.error = progressive::parseMatrixErrorJson(resp.body);
+        r.error = pcp::parseMatrixErrorJson(resp.body);
     }
     return r;
 }
@@ -423,11 +423,11 @@ ApiResult<std::string> MatrixClient::createRoom(const std::string& name,
                          o.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseJsonStringValue(resp.body, "room_id");
+        r.data = pcp::parseJsonStringValue(resp.body, "room_id");
         r.ok = !r.data.empty();
         if (!r.ok) r.error.message = "createRoom: no room_id in response";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -460,7 +460,7 @@ ApiResult<std::string> MatrixClient::searchUsers(const std::string& query, int l
         r.ok = true;
         r.data = resp.body;
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -480,7 +480,7 @@ ApiResult<std::string> MatrixClient::getUserProfile(const std::string& userId) {
         r.ok = true;
         r.data = resp.body;
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -508,11 +508,11 @@ ApiResult<std::string> MatrixClient::joinRoom(const std::string& roomIdOrAlias,
                          body.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseJsonStringValue(resp.body, "room_id");
+        r.data = pcp::parseJsonStringValue(resp.body, "room_id");
         r.ok = !r.data.empty();
         if (!r.ok) r.error.message = "join: no room_id in response";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -526,7 +526,7 @@ ApiResult<bool> MatrixClient::inviteUser(const std::string& roomId,
     auto resp = httpPost(account().homeserverUrl + "/_matrix/client/v3/rooms/"
                          + urlEncodePath(roomId) + "/invite", body, authHeaders(), 15000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     LOG(LogChannel::NET, "inviteUser: room=%s user=%s ok=%d http=%d",
         roomId.c_str(), userId.c_str(), r.ok ? 1 : 0, r.httpStatus);
     return r;
@@ -538,7 +538,7 @@ ApiResult<bool> MatrixClient::leaveRoom(const std::string& roomId) {
     auto resp = httpPost(account().homeserverUrl + "/_matrix/client/v3/rooms/" + urlEncodePath(roomId) + "/leave",
                          "{}", authHeaders(), 15000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     LOG(LogChannel::NET, "leaveRoom: room=%s ok=%d http=%d body=%.200s",
         roomId.c_str(), r.ok ? 1 : 0, r.httpStatus, resp.body.c_str());
     return r;
@@ -551,7 +551,7 @@ ApiResult<bool> MatrixClient::forgetRoom(const std::string& roomId) {
                          + urlEncodePath(roomId) + "/forget",
                          "{}", authHeaders(), 15000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -581,7 +581,7 @@ ApiResult<bool> MatrixClient::changePassword(const std::string& currentPassword,
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; return r; }
     if (resp.statusCode != 401) {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         if (r.error.message.empty()) r.error.message = resp.errorMessage;
         return r;
     }
@@ -602,7 +602,7 @@ ApiResult<bool> MatrixClient::changePassword(const std::string& currentPassword,
     if (resp2.success) {
         r.ok = true;
     } else {
-        if (!resp2.body.empty()) r.error = progressive::parseMatrixErrorJson(resp2.body);
+        if (!resp2.body.empty()) r.error = pcp::parseMatrixErrorJson(resp2.body);
         if (r.error.message.empty()) r.error.message = resp2.errorMessage;
     }
     return r;
@@ -618,7 +618,7 @@ ApiResult<std::string> MatrixClient::listDevices() {
         r.ok = true;
         r.data = resp.body;
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         if (r.error.message.empty()) r.error.message = resp.errorMessage;
     }
     return r;
@@ -640,7 +640,7 @@ ApiResult<std::string> MatrixClient::deleteDevice(const std::string& deviceId,
         r.ok = true;
         r.data = resp.body;
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         if (r.error.message.empty()) r.error.message = resp.errorMessage;
     }
     return r;
@@ -659,10 +659,10 @@ ApiResult<std::string> MatrixClient::sendReaction(const std::string& roomId,
                          "/send/m.reaction/" + txn, body.str(), authHeaders(), 10000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseJsonStringValue(resp.body, "event_id");
+        r.data = pcp::parseJsonStringValue(resp.body, "event_id");
         r.ok = !r.data.empty();
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     }
     return r;
 }
@@ -679,7 +679,7 @@ ApiResult<bool> MatrixClient::redactEvent(const std::string& roomId,
     auto resp = httpPut(account().homeserverUrl + "/_matrix/client/v3/rooms/" + urlEncodePath(roomId) +
                         "/redact/" + eventId + "/" + txn, body, authHeaders(), 10000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -751,7 +751,7 @@ ApiResult<std::string> MatrixClient::getRoomState(const std::string& roomId) {
                         authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
             r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage; }
     return r;
 }
@@ -770,7 +770,7 @@ ApiResult<std::string> MatrixClient::getRoomStateEvent(const std::string& roomId
     else {
         // 404 is not an error for state events — means the state isn't set
         if (resp.statusCode == 404) { r.ok = true; r.data = ""; }
-        else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
                r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage; }
     }
     return r;
@@ -787,7 +787,7 @@ ApiResult<bool> MatrixClient::sendStateEvent(const std::string& roomId,
     if (!stateKey.empty()) url += "/" + stateKey;
     auto resp = httpPut(url, bodyJson, authHeaders(), 10000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -833,7 +833,7 @@ ApiResult<std::string> MatrixClient::getRoomMembers(const std::string& roomId, b
     auto resp = httpGet(url, authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body); }
     if (r.ok) {
         std::lock_guard<std::mutex> lk(memberCacheMtx_);
         if (memberCache_.size() > 64) memberCache_.clear();
@@ -854,7 +854,7 @@ ApiResult<bool> MatrixClient::kickUser(const std::string& roomId, const std::str
     auto resp = httpPost(account().homeserverUrl + "/_matrix/client/v3/rooms/" + urlEncodePath(roomId) + "/kick",
                          body, authHeaders(), 10000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -867,7 +867,7 @@ ApiResult<bool> MatrixClient::banUser(const std::string& roomId, const std::stri
     auto resp = httpPost(account().homeserverUrl + "/_matrix/client/v3/rooms/" + urlEncodePath(roomId) + "/ban",
                          body, authHeaders(), 10000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -878,7 +878,7 @@ ApiResult<bool> MatrixClient::unbanUser(const std::string& roomId, const std::st
     auto resp = httpPost(account().homeserverUrl + "/_matrix/client/v3/rooms/" + urlEncodePath(roomId) + "/unban",
                          body, authHeaders(), 10000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -987,7 +987,7 @@ ApiResult<std::string> MatrixClient::getThreads(const std::string& roomId, const
     auto resp = httpGet(url.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body); }
     return r;
 }
 
@@ -1002,7 +1002,7 @@ ApiResult<std::string> MatrixClient::getThreadReplies(const std::string& roomId,
     auto resp = httpGet(url.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body); }
     return r;
 }
 
@@ -1015,7 +1015,7 @@ ApiResult<std::string> MatrixClient::getEvent(const std::string& roomId, const s
     auto resp = httpGet(url.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body); }
     return r;
 }
 
@@ -1033,7 +1033,7 @@ ApiResult<std::string> MatrixClient::searchPublicRooms(const std::string& server
                          body.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body); }
     return r;
 }
 
@@ -1046,7 +1046,7 @@ ApiResult<std::string> MatrixClient::getSpaceHierarchy(const std::string& spaceI
     auto resp = httpGet(url.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body); }
     return r;
 }
 
@@ -1059,8 +1059,8 @@ ApiResult<std::vector<uint8_t>> MatrixClient::downloadMedia(const std::string& m
     // authenticated requests for newer media. Try v1 first, fall back to v3
     // on 404/400 (mtxclient/Nheko parity). Remote media is still proxied by
     // the homeserver; the origin fallback below covers federation failures.
-    std::string srv = progressive::extractMxcServerName(mxcUrl);
-    std::string mid = progressive::extractMxcMediaId(mxcUrl);
+    std::string srv = pcp::extractMxcServerName(mxcUrl);
+    std::string mid = pcp::extractMxcMediaId(mxcUrl);
     if (srv.empty() || mid.empty()) {
         r.error.message = "invalid mxc URL";
         return r;
@@ -1093,8 +1093,8 @@ ApiResult<std::vector<uint8_t>> MatrixClient::downloadMedia(const std::string& m
     // the media's OWN server directly — media endpoints are public on almost
     // every homeserver, so this rescues media the federation path lost.
     if (!resp.success && resp.statusCode >= 400) {
-        std::string srv = progressive::extractMxcServerName(mxcUrl);
-        std::string mid = progressive::extractMxcMediaId(mxcUrl);
+        std::string srv = pcp::extractMxcServerName(mxcUrl);
+        std::string mid = pcp::extractMxcMediaId(mxcUrl);
         std::string hsHost = account().homeserverUrl;
         auto schemePos = hsHost.find("://");
         if (schemePos != std::string::npos) hsHost = hsHost.substr(schemePos + 3);
@@ -1132,7 +1132,7 @@ ApiResult<std::vector<uint8_t>> MatrixClient::downloadMedia(const std::string& m
         r.ok = true;
         r.data.assign(resp.body.begin(), resp.body.end());
     } else if (!originFailed) {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     LOG(LogChannel::NET, "downloadMedia: DONE mxc=%.120s status=%d ok=%d size=%zu err=%.120s",
@@ -1151,7 +1151,7 @@ ApiResult<std::vector<uint8_t>> MatrixClient::downloadMediaEncrypted(
         r.error = fetched.error;
         return r;
     }
-    auto plain = progressive::desktop::decryptMedia(fetched.data, keyB64, ivB64, shaB64);
+    auto plain = pcp::desktop::decryptMedia(fetched.data, keyB64, ivB64, shaB64);
     if (plain.empty()) {
         r.error.message = "media decryption failed (bad key or sha256 mismatch)";
         LOG(LogChannel::NET, "downloadMediaEncrypted: DECRYPT FAILED mxc=%.120s", mxcUrl.c_str());
@@ -1163,9 +1163,9 @@ ApiResult<std::vector<uint8_t>> MatrixClient::downloadMediaEncrypted(
     return r;
 }
 
-ApiResult<progressive::SyncResponse> MatrixClient::sync(const std::string& since,
+ApiResult<pcp::SyncResponse> MatrixClient::sync(const std::string& since,
                                                         int timeoutMs) {
-    ApiResult<progressive::SyncResponse> r;
+    ApiResult<pcp::SyncResponse> r;
     if (!isLoggedIn()) {
         r.error.message = "not logged in";
         return r;
@@ -1181,10 +1181,10 @@ ApiResult<progressive::SyncResponse> MatrixClient::sync(const std::string& since
     auto resp = httpGet(url.str(), authHeaders(), timeoutMs + 10000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseSyncResponse(resp.body);
+        r.data = pcp::parseSyncResponse(resp.body);
         r.ok = true;
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -1213,7 +1213,7 @@ MatrixClient::FastSyncResult MatrixClient::syncFast(const std::string& since,
         r.ok = err.empty();
         if (!r.ok) r.error.message = std::move(err);
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -1252,7 +1252,7 @@ ApiResult<std::string> MatrixClient::uploadKeys(const std::string& body) {
                          body, authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
            r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage; }
     return r;
 }
@@ -1303,7 +1303,7 @@ ApiResult<std::string> MatrixClient::uploadSignatures(const std::string& body) {
                          body, authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { r.error = progressive::parseMatrixErrorJson(resp.body);
+    else { r.error = pcp::parseMatrixErrorJson(resp.body);
            r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage; }
     LOG(LogChannel::NET, "uploadSignatures: ok=%d http=%d failures=%.300s",
         r.ok ? 1 : 0, r.httpStatus, resp.body.c_str());
@@ -1317,7 +1317,7 @@ ApiResult<std::string> MatrixClient::createRoomKeysVersion(const std::string& bo
                          body, authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { r.error = pcp::parseMatrixErrorJson(resp.body); }
     LOG(LogChannel::NET, "createRoomKeysVersion: ok=%d http=%d body=%.200s",
         r.ok ? 1 : 0, r.httpStatus, resp.body.c_str());
     return r;
@@ -1332,7 +1332,7 @@ ApiResult<std::string> MatrixClient::uploadRoomKeys(const std::string& body,
                         + urlEncodePath(version), body, authHeaders(), 30000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { r.error = pcp::parseMatrixErrorJson(resp.body); }
     LOG(LogChannel::NET, "uploadRoomKeys: ok=%d http=%d body=%.200s",
         r.ok ? 1 : 0, r.httpStatus, resp.body.c_str());
     return r;
@@ -1345,7 +1345,7 @@ ApiResult<std::string> MatrixClient::getRoomKeysVersion(const std::string& versi
                         + urlEncodePath(version), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { r.error = pcp::parseMatrixErrorJson(resp.body); }
     LOG(LogChannel::NET, "getRoomKeysVersion: ok=%d http=%d body=%.200s",
         r.ok ? 1 : 0, r.httpStatus, resp.body.c_str());
     return r;
@@ -1358,7 +1358,7 @@ ApiResult<std::string> MatrixClient::getRoomKeysVersions() {
                         authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { r.error = pcp::parseMatrixErrorJson(resp.body); }
     LOG(LogChannel::NET, "getRoomKeysVersions: ok=%d http=%d body=%.200s",
         r.ok ? 1 : 0, r.httpStatus, resp.body.c_str());
     return r;
@@ -1371,7 +1371,7 @@ ApiResult<std::string> MatrixClient::getRoomKeys(const std::string& version) {
                         + urlEncodePath(version), authHeaders(), 30000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { r.error = progressive::parseMatrixErrorJson(resp.body); }
+    else { r.error = pcp::parseMatrixErrorJson(resp.body); }
     LOG(LogChannel::NET, "getRoomKeys: ok=%d http=%d body=%.300s",
         r.ok ? 1 : 0, r.httpStatus, resp.body.c_str());
     return r;
@@ -1383,7 +1383,7 @@ ApiResult<bool> MatrixClient::deleteRoomKeysVersion(const std::string& version) 
     auto resp = httpDelete(account().homeserverUrl + "/_matrix/client/v3/room_keys/version/"
                            + urlEncodePath(version), authHeaders(), 15000);
     r.httpStatus = resp.statusCode; r.ok = resp.success; r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -1394,7 +1394,7 @@ ApiResult<std::string> MatrixClient::queryKeys(const std::string& body) {
                          body, authHeaders(), 30000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
            r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage; }
     return r;
 }
@@ -1406,7 +1406,7 @@ ApiResult<std::string> MatrixClient::claimKeys(const std::string& body) {
                          body, authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
            r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage; }
     return r;
 }
@@ -1422,7 +1422,7 @@ ApiResult<bool> MatrixClient::sendToDevice(const std::string& eventType,
     r.httpStatus = resp.statusCode;
     r.ok = resp.success;
     r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -1452,10 +1452,10 @@ ApiResult<std::string> MatrixClient::uploadMedia(const std::vector<uint8_t>& dat
     r.httpStatus = resp.statusCode;
     if (resp.success) {
         r.ok = true;
-        r.data = progressive::parseJsonStringValue(resp.body, "content_uri");
+        r.data = pcp::parseJsonStringValue(resp.body, "content_uri");
         if (r.data.empty()) r.error.message = "upload: no content_uri in response";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     LOG(LogChannel::NET, "uploadMedia: status=%d ok=%d mxc=%.120s err=%.200s",
@@ -1533,9 +1533,9 @@ ApiResult<AccountInfo> MatrixClient::registerAccount(const std::string& username
     if (resp.success) {
         // Parse the response: {"user_id":"...","device_id":"...","access_token":"..."}
         AccountInfo acct;
-        acct.userId = progressive::parseJsonStringValue(resp.body, "user_id");
-        acct.deviceId = progressive::parseJsonStringValue(resp.body, "device_id");
-        acct.accessToken = progressive::parseJsonStringValue(resp.body, "access_token");
+        acct.userId = pcp::parseJsonStringValue(resp.body, "user_id");
+        acct.deviceId = pcp::parseJsonStringValue(resp.body, "device_id");
+        acct.accessToken = pcp::parseJsonStringValue(resp.body, "access_token");
         acct.homeserverUrl = homeserverUrl;
         if (!acct.userId.empty() && !acct.accessToken.empty()) {
             r.ok = true;
@@ -1567,9 +1567,9 @@ ApiResult<AccountInfo> MatrixClient::registerAccount(const std::string& username
                                   body2.str(), hdrs, 15000);
             if (resp2.success) {
                 AccountInfo acct;
-                acct.userId = progressive::parseJsonStringValue(resp2.body, "user_id");
-                acct.deviceId = progressive::parseJsonStringValue(resp2.body, "device_id");
-                acct.accessToken = progressive::parseJsonStringValue(resp2.body, "access_token");
+                acct.userId = pcp::parseJsonStringValue(resp2.body, "user_id");
+                acct.deviceId = pcp::parseJsonStringValue(resp2.body, "device_id");
+                acct.accessToken = pcp::parseJsonStringValue(resp2.body, "access_token");
                 acct.homeserverUrl = homeserverUrl;
                 if (!acct.userId.empty() && !acct.accessToken.empty()) {
                     r.ok = true;
@@ -1598,7 +1598,7 @@ ApiResult<AccountInfo> MatrixClient::registerAccount(const std::string& username
     // 403 with registration token error
     if ((resp.statusCode == 403 || resp.statusCode == 401)
         && !regToken.empty()) {
-        auto errBody = progressive::parseMatrixErrorJson(resp.body);
+        auto errBody = pcp::parseMatrixErrorJson(resp.body);
         if (errBody.message.find("registration_token") != std::string::npos) {
             r.error.code = "M_REGISTRATION_TOKEN_INVALID";
             r.error.message = "Invalid or expired registration token.";
@@ -1609,7 +1609,7 @@ ApiResult<AccountInfo> MatrixClient::registerAccount(const std::string& username
     // registrations only) — no client or browser can bypass this; the UI
     // explains and offers the registration page link anyway.
     if (resp.statusCode == 403) {
-        auto errBody = progressive::parseMatrixErrorJson(resp.body);
+        auto errBody = pcp::parseMatrixErrorJson(resp.body);
         std::string lower = errBody.message;
         for (auto& c : lower) c = (char)std::tolower((unsigned char)c);
         if (lower.find("disabled") != std::string::npos ||
@@ -1623,7 +1623,7 @@ ApiResult<AccountInfo> MatrixClient::registerAccount(const std::string& username
     }
     // Other error
     if (!resp.body.empty()) {
-        r.error = progressive::parseMatrixErrorJson(resp.body);
+        r.error = pcp::parseMatrixErrorJson(resp.body);
     } else {
         r.error.message = resp.errorMessage.empty() ? "registration failed" : resp.errorMessage;
     }
@@ -1642,7 +1642,7 @@ ApiResult<bool> MatrixClient::setDisplayName(const std::string& displayName) {
     r.httpStatus = resp.statusCode;
     r.ok = resp.success;
     r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -1656,7 +1656,7 @@ ApiResult<bool> MatrixClient::setAvatarUrl(const std::string& mxcUrl) {
     r.httpStatus = resp.statusCode;
     r.ok = resp.success;
     r.data = resp.success;
-    if (!resp.success && !resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    if (!resp.success && !resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
     return r;
 }
 
@@ -1668,7 +1668,7 @@ ApiResult<std::string> MatrixClient::getPresence(const std::string& userId) {
     auto resp = httpGet(url, authHeaders(), 10000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
            r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage; }
     return r;
 }
@@ -1680,7 +1680,7 @@ ApiResult<std::string> MatrixClient::getProfile(const std::string& userId) {
     auto resp = httpGet(url, authHeaders(), 10000);
     r.httpStatus = resp.statusCode;
     if (resp.success) { r.ok = true; r.data = resp.body; }
-    else { if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+    else { if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
            r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage; }
     return r;
 }
@@ -1702,11 +1702,11 @@ ApiResult<std::string> MatrixClient::sendThreadReply(const std::string& roomId,
     auto resp = httpPut(url.str(), jsonBody.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseJsonStringValue(resp.body, "event_id");
+        r.data = pcp::parseJsonStringValue(resp.body, "event_id");
         r.ok = !r.data.empty();
         if (!r.ok) r.error.message = "send: no event_id in response";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -1723,11 +1723,11 @@ ApiResult<std::string> MatrixClient::sendEncryptedEvent(const std::string& roomI
     auto resp = httpPut(url.str(), contentJson, authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseJsonStringValue(resp.body, "event_id");
+        r.data = pcp::parseJsonStringValue(resp.body, "event_id");
         r.ok = !r.data.empty();
         if (!r.ok) r.error.message = "send: no event_id in response";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -1745,11 +1745,11 @@ ApiResult<std::string> MatrixClient::sendMessageEvent(const std::string& roomId,
     auto resp = httpPut(url.str(), contentJson, authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseJsonStringValue(resp.body, "event_id");
+        r.data = pcp::parseJsonStringValue(resp.body, "event_id");
         r.ok = !r.data.empty();
         if (!r.ok) r.error.message = "send: no event_id in response";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
@@ -1772,14 +1772,14 @@ ApiResult<std::string> MatrixClient::editMessage(const std::string& roomId,
     auto resp = httpPut(url.str(), jsonBody.str(), authHeaders(), 15000);
     r.httpStatus = resp.statusCode;
     if (resp.success) {
-        r.data = progressive::parseJsonStringValue(resp.body, "event_id");
+        r.data = pcp::parseJsonStringValue(resp.body, "event_id");
         r.ok = !r.data.empty();
         if (!r.ok) r.error.message = "edit: no event_id in response";
     } else {
-        if (!resp.body.empty()) r.error = progressive::parseMatrixErrorJson(resp.body);
+        if (!resp.body.empty()) r.error = pcp::parseMatrixErrorJson(resp.body);
         r.error.message = resp.errorMessage.empty() ? r.error.message : resp.errorMessage;
     }
     return r;
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

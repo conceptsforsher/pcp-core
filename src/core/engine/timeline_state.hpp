@@ -17,7 +17,7 @@
 
 #include "engine_types.hpp"
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 class TimelineState {
 public:
@@ -69,4 +69,4 @@ public:
     std::unordered_map<std::string, int> rowIndex_;
 };
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

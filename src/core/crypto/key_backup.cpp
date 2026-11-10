@@ -11,7 +11,7 @@
 #include <simdjson.h>
 #include <vector>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 std::string createKeyBackup(MatrixClient& client, SessionStore* store,
                             const std::string& userId) {
@@ -159,4 +159,4 @@ int restoreKeyBackup(MatrixClient& client, Decryptor& decryptor,
     return imported;
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

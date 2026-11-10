@@ -1,8 +1,8 @@
-#include "progressive/matrix_error.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/matrix_error.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 // --- Parse Matrix Error JSON ---
 MatrixError parseMatrixErrorJson(const std::string& json) {
@@ -152,4 +152,4 @@ std::string matrixErrorToJson(const MatrixError& error) {
     return json.str();
 }
 
-} // namespace progressive
+} // namespace pcp

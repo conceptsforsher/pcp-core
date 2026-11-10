@@ -1,7 +1,7 @@
-#include "progressive/server_notice_utils.hpp"
+#include "pcp/server_notice_utils.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 ServerNoticeContent parseServerNotice(const std::string& json) {
     ServerNoticeContent n;
@@ -35,4 +35,4 @@ std::string buildServerNoticeTag() {
     return R"({"tags":{"m.server_notice":{}}})";
 }
 
-} // namespace progressive
+} // namespace pcp

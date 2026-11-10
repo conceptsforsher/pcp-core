@@ -1,10 +1,10 @@
-#include "progressive/content_utils.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/content_utils.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <iomanip>
 #include <cmath>
 
-namespace progressive {
+namespace pcp {
 
 // ---- MXC URL Resolution ----
 // Original Kotlin (ContentUrlResolver.kt):
@@ -570,4 +570,4 @@ std::string ensureCorrectFormattedBodyInTextReply(
     return originalFormattedBody.substr(0, endPos) + newBody;
 }
 
-} // namespace progressive
+} // namespace pcp

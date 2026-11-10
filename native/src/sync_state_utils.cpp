@@ -1,6 +1,6 @@
-#include "progressive/sync_state_utils.hpp"
+#include "pcp/sync_state_utils.hpp"
 #include <sstream>
-namespace progressive {
+namespace pcp {
 SyncState parseSyncState(const std::string& json) {
     SyncState s; auto p=json.find("\"next_batch\":\""); if(p!=std::string::npos){p+=14;auto e=json.find('"',p);if(e!=std::string::npos)s.nextBatch=json.substr(p,e-p);}
     return s;

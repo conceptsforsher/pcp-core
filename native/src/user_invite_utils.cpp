@@ -1,6 +1,6 @@
-#include "progressive/user_invite_utils.hpp"
+#include "pcp/user_invite_utils.hpp"
 #include <sstream>
-namespace progressive {
+namespace pcp {
 InviteTarget parseInviteTarget(const std::string& input) {
     InviteTarget t; t.value = input;
     if (input.find('@') != std::string::npos && input.find(':') == std::string::npos) t.isEmail = true;

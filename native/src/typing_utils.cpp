@@ -1,8 +1,8 @@
-#include "progressive/typing_utils.hpp"
+#include "pcp/typing_utils.hpp"
 #include <sstream>
 #include <chrono>
 
-namespace progressive {
+namespace pcp {
 
 TypingStatus parseTypingEvent(const std::string& json) {
     TypingStatus s;
@@ -81,4 +81,4 @@ bool isTypingExpired(int64_t lastTypedMs, int64_t nowMs, int timeoutMs) {
     return (nowMs - lastTypedMs) > timeoutMs;
 }
 
-} // namespace progressive
+} // namespace pcp

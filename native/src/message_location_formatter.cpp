@@ -1,8 +1,8 @@
-#include "progressive/message_location_formatter.hpp"
+#include "pcp/message_location_formatter.hpp"
 #include <sstream>
 #include <chrono>
 
-namespace progressive {
+namespace pcp {
 
 static std::string extractField(const std::string& json, const std::string& key) {
     auto p = json.find("\"" + key + "\":\"");
@@ -59,4 +59,4 @@ bool isLocationStale(int64_t ts) {
     return (now - ts) > 3600000;
 }
 
-} // namespace progressive
+} // namespace pcp

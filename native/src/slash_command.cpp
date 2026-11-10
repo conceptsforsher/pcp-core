@@ -1,10 +1,10 @@
-#include "progressive/slash_command.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/slash_command.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <cctype>
 
-namespace progressive {
+namespace pcp {
 
 // ---- Command Table (from Command.kt lines 26-66) ----
 // Faithful reproduction of the 32-entry enum with all aliases and flags.
@@ -580,4 +580,4 @@ std::string getCommandParameters(SlashCommandId id) {
     return "";
 }
 
-} // namespace progressive
+} // namespace pcp

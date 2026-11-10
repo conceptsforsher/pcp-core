@@ -4,7 +4,7 @@
 #include "olm_account.hpp"
 #include "recovery_key.hpp"
 
-#include "progressive/crypto_algorithms.hpp"
+#include "pcp/crypto_algorithms.hpp"
 
 #include <openssl/evp.h>
 #include <sodium.h>
@@ -12,20 +12,20 @@
 #include <cstring>
 #include <vector>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 namespace {
 
-// libolm-backed SHA/HMAC/HKDF (progressive_native, namespace progressive).
+// libolm-backed SHA/HMAC/HKDF (pcp_native, namespace pcp).
 std::vector<uint8_t> hmacSha256(const std::vector<uint8_t>& key,
                                 const std::vector<uint8_t>& data) {
-    return progressive::hmacSha256(key.data(), key.size(), data.data(), data.size());
+    return pcp::hmacSha256(key.data(), key.size(), data.data(), data.size());
 }
 
 std::vector<uint8_t> hkdfSha256(const std::vector<uint8_t>& ikm,
                                 const std::vector<uint8_t>& salt,
                                 const std::vector<uint8_t>& info, int len) {
-    return progressive::hkdfDeriveSecret(ikm, salt, info, len);
+    return pcp::hkdfDeriveSecret(ikm, salt, info, len);
 }
 
 std::vector<uint8_t> aesCbcEncrypt(const std::vector<uint8_t>& key,
@@ -205,4 +205,4 @@ std::string generateSsssKeyId() {
     return base64Encode(std::string(rnd.begin(), rnd.end()));
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

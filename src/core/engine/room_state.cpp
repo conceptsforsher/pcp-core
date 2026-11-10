@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 RoomState::UpsertResult RoomState::upsertRoom(const RoomData& room) {
     if (isHidden(room.roomId)) return UpsertResult::Hidden;
@@ -109,4 +109,4 @@ int RoomState::joinedCount() const {
     return count;
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

@@ -1,11 +1,11 @@
-#include "progressive/mas_auth.hpp"
-#include "progressive/olm.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/mas_auth.hpp"
+#include "pcp/olm.hpp"
+#include "pcp/string_utils.hpp"
 
 #include <sstream>
 #include <cstdlib>
 
-namespace progressive {
+namespace pcp {
 
 // ==== Small JSON helpers (manual, allocation-light) ====
 
@@ -465,4 +465,4 @@ MasTokenResult masPollDeviceToken(const std::string& tokenEndpoint,
     return result;
 }
 
-} // namespace progressive
+} // namespace pcp

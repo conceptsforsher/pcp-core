@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 // m.encrypted v2 media: AES-256-CTR with a random 32-byte key + 16-byte IV
 // (both base64). hashes.sha256 covers the PLAINTEXT (matrix-js-sdk
@@ -26,4 +26,4 @@ std::vector<uint8_t> decryptMedia(const std::vector<uint8_t>& ciphertext,
                                   const std::string& ivB64,
                                   const std::string& shaB64);
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

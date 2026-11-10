@@ -35,7 +35,7 @@ static int countOTKs(const std::string& json) {
 }
 
 static void test_otk_count_lifecycle() {
-    progressive::desktop::OlmAccountStore store;
+    pcp::desktop::OlmAccountStore store;
     CHECK(store.create(), "create() succeeds");
     CHECK_EQ(store.uploadedKeyCount(), 0, "uploadedKeyCount 0 after create");
 
@@ -57,7 +57,7 @@ static void test_otk_count_lifecycle() {
 }
 
 static void test_count_roundtrip() {
-    progressive::desktop::OlmAccountStore store1;
+    pcp::desktop::OlmAccountStore store1;
     CHECK(store1.create(), "store1 create()");
     store1.generateOneTimeKeys(5);
     store1.markOneTimeKeysPublished();
@@ -66,13 +66,13 @@ static void test_count_roundtrip() {
     std::string pickle = store1.save("otk-roundtrip-key");
     CHECK(!pickle.empty(), "save() non-empty");
 
-    progressive::desktop::OlmAccountStore store2;
+    pcp::desktop::OlmAccountStore store2;
     CHECK(store2.load(pickle, "otk-roundtrip-key"), "load() succeeds");
     // uploadedKeyCount is NOT in libolm pickle — DB-layer, verified in test_e2ee_account
 }
 
 static void test_fallback_key_lifecycle() {
-    progressive::desktop::OlmAccountStore store;
+    pcp::desktop::OlmAccountStore store;
     CHECK(store.create(), "fallback: create() succeeds");
 
     CHECK(store.unpublishedFallbackKey().empty(), "fallback: no unpublished key before generate");
@@ -90,7 +90,7 @@ static void test_fallback_key_lifecycle() {
 }
 
 static void test_fallback_key_roundtrip() {
-    progressive::desktop::OlmAccountStore store1;
+    pcp::desktop::OlmAccountStore store1;
     CHECK(store1.create(), "fallback-roundtrip: create()");
     CHECK(store1.generateFallbackKey(), "fallback-roundtrip: generate()");
     CHECK(!store1.unpublishedFallbackKey().empty(), "fallback-roundtrip: unpublished before save");
@@ -98,7 +98,7 @@ static void test_fallback_key_roundtrip() {
     std::string pickle = store1.save("fallback-roundtrip-key");
     CHECK(!pickle.empty(), "fallback-roundtrip: save() non-empty");
 
-    progressive::desktop::OlmAccountStore store2;
+    pcp::desktop::OlmAccountStore store2;
     CHECK(store2.load(pickle, "fallback-roundtrip-key"), "fallback-roundtrip: load() succeeds");
     // The fallback key lives inside the libolm account pickle — it survives
     // save/load without any DB schema change.
@@ -109,7 +109,7 @@ static void test_fallback_key_roundtrip() {
 static void test_sync_unused_fallback_parse() {
     // device_unused_fallback_key_types present → parsed into the response.
     std::string err;
-    auto resp = progressive::desktop::parseSyncResponseFast(
+    auto resp = pcp::desktop::parseSyncResponseFast(
         R"({"device_unused_fallback_key_types":["signed_curve25519","other"],
             "device_one_time_keys_count":{"signed_curve25519":5}})",
         err);
@@ -120,34 +120,34 @@ static void test_sync_unused_fallback_parse() {
           "sync-fallback: first type is signed_curve25519");
 
     // Field absent → empty vector (the "never uploaded" case → trigger upload).
-    auto resp2 = progressive::desktop::parseSyncResponseFast(
+    auto resp2 = pcp::desktop::parseSyncResponseFast(
         R"({"device_one_time_keys_count":{"signed_curve25519":5}})", err);
     CHECK(resp2.unusedFallbackKeyTypes.empty(),
           "sync-fallback: absent field → empty vector");
 
     // OTK count — modern matrix.org shape (flat under device_one_time_keys_count):
     // {"device_one_time_keys_count":{"signed_curve25519":N}}.
-    auto resp3 = progressive::desktop::parseSyncResponseFast(
+    auto resp3 = pcp::desktop::parseSyncResponseFast(
         R"({"device_one_time_keys_count":{"signed_curve25519":7}})", err, "DEV1");
     CHECK(resp3.signedCurve25519Count == 7,
           "otk-count: modern flat shape parsed");
 
     // Alternative shape (keyed by device id directly).
-    auto resp4 = progressive::desktop::parseSyncResponseFast(
+    auto resp4 = pcp::desktop::parseSyncResponseFast(
         R"({"device_one_time_keys_count":{"DEV1":{"signed_curve25519":9}}})", err,
         "DEV1");
     CHECK(resp4.signedCurve25519Count == 9,
           "otk-count: per-device shape parsed");
 
     // Older spec shape (nested under user id) with the userId supplied.
-    auto resp5 = progressive::desktop::parseSyncResponseFast(
+    auto resp5 = pcp::desktop::parseSyncResponseFast(
         R"({"device_one_time_keys_count":{"@u:s":{"DEV1":{"signed_curve25519":3}}}})",
         err, "DEV1", "@u:s");
     CHECK(resp5.signedCurve25519Count == 3,
           "otk-count: older nested user/device shape parsed");
 
     // Legacy flat map fallback.
-    auto resp6 = progressive::desktop::parseSyncResponseFast(
+    auto resp6 = pcp::desktop::parseSyncResponseFast(
         R"({"one_time_keys_count":{"signed_curve25519":11}})", err);
     CHECK(resp6.signedCurve25519Count == 11,
           "otk-count: legacy flat map parsed");
@@ -156,7 +156,7 @@ static void test_sync_unused_fallback_parse() {
 static void test_rng_is_csprng() {
     // Two fresh accounts must get different identity keys (depends on random bytes,
     // not sequential counters — catches unseeded-rand() regression).
-    progressive::desktop::OlmAccountStore a, b;
+    pcp::desktop::OlmAccountStore a, b;
     CHECK(a.create(), "rng: first account created");
     CHECK(b.create(), "rng: second account created");
     CHECK(a.ed25519Key() != b.ed25519Key(), "rng: two accounts have different ed25519 keys");
@@ -165,7 +165,7 @@ static void test_rng_is_csprng() {
 
 
 static void test_signed_fallback_body() {
-    progressive::desktop::Decryptor dec;
+    pcp::desktop::Decryptor dec;
     CHECK(dec.init(), "fallback-body: decryptor init");
     std::string userId = "t";
     std::string deviceId = "d";
@@ -194,7 +194,7 @@ static void test_signed_fallback_body() {
         auto sf = val.value()["signatures"][userId]["ed25519:" + deviceId].get_string();
         CHECK(sf.error() == simdjson::SUCCESS, "fallback-body: signature found");
         std::string ed = dec.account()->ed25519Key();
-        CHECK(progressive::desktop::verifyOtk(ed, std::string(kf.value()), std::string(sf.value())),
+        CHECK(pcp::desktop::verifyOtk(ed, std::string(kf.value()), std::string(sf.value())),
               "fallback-body: verifyOtk returns true");
         found = true;
     }

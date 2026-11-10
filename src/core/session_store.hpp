@@ -14,7 +14,7 @@
 
 struct sqlite3;
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 struct OlmAccountRecord {
     std::string pickle;
@@ -138,4 +138,4 @@ private:
     mutable std::recursive_mutex mtx_;
 };
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

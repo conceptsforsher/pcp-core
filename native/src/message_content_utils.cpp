@@ -1,8 +1,8 @@
-#include "progressive/message_content_utils.hpp"
+#include "pcp/message_content_utils.hpp"
 #include <sstream>
 #include <regex>
 
-namespace progressive {
+namespace pcp {
 
 // Helper: extract string value from JSON by key
 static std::string jsonGet(const std::string& json, const std::string& key) {
@@ -199,4 +199,4 @@ std::string buildMessageEvent(const std::string& roomId, const std::string& body
     return oss.str();
 }
 
-} // namespace progressive
+} // namespace pcp

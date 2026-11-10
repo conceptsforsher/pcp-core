@@ -1,11 +1,11 @@
-#include "progressive/poll_utils.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/poll_utils.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <chrono>
 #include <random>
 
-namespace progressive {
+namespace pcp {
 
 PollResult computePollResults(
     const std::string& question,
@@ -152,4 +152,4 @@ bool hasVoted(const std::string& userId, const std::vector<std::string>& optionV
     return std::find(optionVoters.begin(), optionVoters.end(), userId) != optionVoters.end();
 }
 
-} // namespace progressive
+} // namespace pcp

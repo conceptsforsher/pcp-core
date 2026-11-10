@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# scripts/unity_exclude.py — progressive-core unity-build helper.
+# scripts/unity_exclude.py — pcp-core unity-build helper.
 #
 # The vendored native codebase defines many helper functions at namespace
 # scope in MULTIPLE .cpp files (legacy copies of extractJson*, base64*,
@@ -25,7 +25,7 @@ import glob
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_DIR = os.path.join(ROOT, "native", "src")
-HDR_DIR = os.path.join(ROOT, "native", "include", "progressive")
+HDR_DIR = os.path.join(ROOT, "native", "include", "pcp")
 
 # Lines that look like function definitions in a .cpp (static or namespace
 # scope). Deliberately loose: `bool isTextMessage(const ...)` etc.

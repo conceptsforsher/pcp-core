@@ -1,11 +1,11 @@
-#include "progressive/search_engine.hpp"
-#include "progressive/eventdb.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/search_engine.hpp"
+#include "pcp/eventdb.hpp"
+#include "pcp/string_utils.hpp"
 #include <algorithm>
 #include <cstring>
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 static bool caseInsensitiveContains(const std::string& haystack, const std::string& needle) {
     if (needle.empty()) return true;
@@ -49,4 +49,4 @@ std::string RoomSearchEngine::search(const std::string& roomId, const std::strin
     return out.str();
 }
 
-} // namespace progressive
+} // namespace pcp

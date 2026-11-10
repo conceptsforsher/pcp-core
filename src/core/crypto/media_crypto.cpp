@@ -6,7 +6,7 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 bool generateMediaKeyIv(std::string& keyB64, std::string& ivB64) {
     std::vector<uint8_t> key(32), iv(16);
@@ -74,4 +74,4 @@ std::vector<uint8_t> decryptMedia(const std::vector<uint8_t>& ciphertext,
     return plain;
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

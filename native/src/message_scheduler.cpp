@@ -1,9 +1,9 @@
-#include "progressive/message_scheduler.hpp"
+#include "pcp/message_scheduler.hpp"
 #include <sstream>
 #include <chrono>
 #include <cstdlib>
 
-namespace progressive {
+namespace pcp {
 
 MessageScheduler::MessageScheduler() {}
 
@@ -136,4 +136,4 @@ void MessageScheduler::cleanup(int64_t olderThanMs) {
         }), messages_.end());
 }
 
-} // namespace progressive
+} // namespace pcp

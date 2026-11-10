@@ -1,9 +1,9 @@
-#include "progressive/room_alias_utils.hpp"
+#include "pcp/room_alias_utils.hpp"
 #include <regex>
 #include <cctype>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 bool isValidAlias(const std::string& alias) {
     if (alias.empty() || alias[0] != '#') return false;
@@ -102,4 +102,4 @@ std::string buildAliasCreateRequest(const std::string& alias) {
     return R"({"room_alias_name":")" + server + R"("})";
 }
 
-} // namespace progressive
+} // namespace pcp

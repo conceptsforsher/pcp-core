@@ -1,9 +1,9 @@
-#include "progressive/content_text_utils.hpp"
+#include "pcp/content_text_utils.hpp"
 #include <regex>
 #include <sstream>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 static const char* MX_REPLY_START = "<mx-reply>";
 static const char* MX_REPLY_END = "</mx-reply>";
@@ -164,4 +164,4 @@ bool isHtmlReply(const std::string& text) {
     return text.rfind(MX_REPLY_START, 0) == 0;
 }
 
-} // namespace progressive
+} // namespace pcp

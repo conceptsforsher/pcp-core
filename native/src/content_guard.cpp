@@ -1,8 +1,8 @@
-#include "progressive/content_guard.hpp"
+#include "pcp/content_guard.hpp"
 #include <sstream>
 #include <unordered_set>
 
-namespace progressive {
+namespace pcp {
 
 // ==== Emoji Detection ====
 // Unicode emoji ranges from https://unicode.org/emoji/charts/full-emoji-list.html
@@ -271,4 +271,4 @@ ContentWarningType classifyContentWarning(const std::string& scanResult) {
     return ContentWarningType::CUSTOM;
 }
 
-} // namespace progressive
+} // namespace pcp
