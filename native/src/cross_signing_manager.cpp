@@ -1,9 +1,9 @@
-#include "progressive/cross_signing_manager.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/cross_signing_manager.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 // ====== Enum ======
 
@@ -339,4 +339,4 @@ std::string CrossSigningManager::deviceTrustToJson(const DeviceTrustResult& resu
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

@@ -1,4 +1,4 @@
-#include "progressive/olm.hpp"
+#include "pcp/olm.hpp"
 #include <olm/olm.h>
 #include <sstream>
 #include <cstring>
@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <random>
 
-namespace progressive {
+namespace pcp {
 
 // ==== Utility functions ====
 
@@ -410,4 +410,4 @@ bool OlmSession::matchesInbound(const std::string& preKeyMessage) {
     return rc == 1;
 }
 
-} // namespace progressive
+} // namespace pcp

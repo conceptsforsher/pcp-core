@@ -1,10 +1,10 @@
-#include "progressive/identity_server_manager.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/identity_server_manager.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <ctime>
 
-namespace progressive {
+namespace pcp {
 
 // ====== Enum conversions ======
 
@@ -403,4 +403,4 @@ std::string IdentityServerManager::foundPidToJson(const IS_FoundThreePid& found)
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

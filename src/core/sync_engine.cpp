@@ -17,7 +17,7 @@
 #include <openssl/evp.h>
 #include <simdjson.h>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 SyncEngine::SyncEngine() = default;
 
@@ -720,7 +720,7 @@ void SyncEngine::uploadDeviceKeys(bool force, int knownServerCount) {
 
     std::string userId = client_->account().userId;
     std::string deviceId = client_->account().deviceId;
-    if (deviceId.empty()) deviceId = "PROGRESSIVE_DESKTOP";
+    if (deviceId.empty()) deviceId = "PCP_DESKTOP";
 
     int serverCount = decryptor_.account()->uploadedKeyCount();
     if (force && knownServerCount >= 0) serverCount = knownServerCount;
@@ -830,13 +830,13 @@ void SyncEngine::uploadDeviceKeys(bool force, int knownServerCount) {
 }
 
 // Build the /keys/device_signing/upload body for a key set.
-static std::string buildDeviceSigningUploadBody(const progressive::desktop::CrossSigningKeys& keys,
+static std::string buildDeviceSigningUploadBody(const pcp::desktop::CrossSigningKeys& keys,
     const std::string& userId, const std::string& authJson) {
-    auto master = progressive::desktop::buildCrossSigningContent("m.cross_signing.master",
+    auto master = pcp::desktop::buildCrossSigningContent("m.cross_signing.master",
         keys.masterPub, "", "", userId);
-    auto self = progressive::desktop::buildCrossSigningContent("m.cross_signing.self_signing",
+    auto self = pcp::desktop::buildCrossSigningContent("m.cross_signing.self_signing",
         keys.selfPub, keys.masterPub, keys.masterPriv, userId);
-    auto user = progressive::desktop::buildCrossSigningContent("m.cross_signing.user_signing",
+    auto user = pcp::desktop::buildCrossSigningContent("m.cross_signing.user_signing",
         keys.userPub, keys.masterPub, keys.masterPriv, userId);
     std::string out = "{";
     if (!authJson.empty()) out += "\"auth\":" + authJson + ",";
@@ -1368,7 +1368,7 @@ void SyncEngine::uploadFallbackKey() {
 
     std::string userId = client_->account().userId;
     std::string deviceId = client_->account().deviceId;
-    if (deviceId.empty()) deviceId = "PROGRESSIVE_DESKTOP";
+    if (deviceId.empty()) deviceId = "PCP_DESKTOP";
 
     // Element (rust-sdk account.rs) parity: generate a fresh fallback key
     // when none is unpublished AND the current one is due for rotation —
@@ -1490,4 +1490,4 @@ ApiResult<std::string> SyncEngine::sendMessage(const std::string& roomId,
     return client_->sendEncryptedEvent(roomId, enc, txn);
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

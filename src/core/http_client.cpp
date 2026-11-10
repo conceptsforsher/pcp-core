@@ -1,6 +1,6 @@
 // src/core/http_client.cpp — libcurl implementation.
 //
-// Why libcurl and not the progressive_native http_client.cpp?
+// Why libcurl and not the pcp_native http_client.cpp?
 // The upstream module delegates TLS to Android's javax.net.ssl.SSLSocket
 // via tls_bridge.cpp (JNI). On desktop there is no JVM — we use libcurl
 // which handles TLS (OpenSSL), proxy, SOCKS5 (Tor/I2P), redirects.
@@ -15,7 +15,7 @@
 #include <deque>
 #include <chrono>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 // Global proxy config (set via setGlobalProxy, read in each request).
 static ProxyConfig g_proxy;
@@ -158,7 +158,7 @@ HttpResponse httpExecute(const HttpRequest& req) {
     curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT_MS, 15000);
     curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, req.followRedirects ? 1L : 0L);
     curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 5L);
-    curl_easy_setopt(curl, CURLOPT_USERAGENT, "progressive-desktop/" PROGRESSIVE_DESKTOP_VERSION);
+    curl_easy_setopt(curl, CURLOPT_USERAGENT, "pcp-desktop/" PCP_DESKTOP_VERSION);
     // Transfer progress (when a callback is registered).
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
     curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progressCallback);
@@ -257,4 +257,4 @@ HttpResponse httpDelete(const std::string& url,
     return httpExecute({"DELETE", url, "", headers, timeoutMs, true});
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

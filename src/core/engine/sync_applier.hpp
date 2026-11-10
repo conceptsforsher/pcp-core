@@ -11,7 +11,7 @@
 #include "engine_types.hpp"
 #include "../fast_sync.hpp"
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 class Decryptor;
 
@@ -76,4 +76,4 @@ public:
                                      Decryptor* decryptor);
 };
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

@@ -1,7 +1,7 @@
-#include "progressive/event_context_utils.hpp"
+#include "pcp/event_context_utils.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 EventContext parseEventContext(const std::string& json) {
     EventContext ctx;
     auto extract = [&](const std::string& key) -> std::string {
@@ -20,4 +20,4 @@ std::string buildContextRequest(int limit) { return R"({"limit":)" + std::to_str
 std::string formatContextSummary(const EventContext& ctx) {
     return "Event with " + std::to_string(ctx.beforeEvents.size()) + " before";
 }
-} // namespace progressive
+} // namespace pcp

@@ -1,7 +1,7 @@
-#include "progressive/timeline_state_utils.hpp"
+#include "pcp/timeline_state_utils.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 TimelineState parseTimelineState(const std::string& json) {
     TimelineState s;
     auto extract = [&](const std::string& key) -> std::string {
@@ -18,4 +18,4 @@ bool hasMoreEvents(const TimelineState& s, bool forward) { return forward ? !s.n
 std::string formatTimelinePagination(const TimelineState& s) {
     std::ostringstream os; os << s.eventCount << " events"; if (s.limited) os << " (limited)"; return os.str();
 }
-} // namespace progressive
+} // namespace pcp

@@ -12,7 +12,7 @@
 
 #include "engine_types.hpp"
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 class RoomState {
 public:
@@ -48,4 +48,4 @@ private:
     int lastRemoveRow_ = -1;
 };
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

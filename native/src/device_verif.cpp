@@ -1,6 +1,6 @@
 // device_verif.cpp — Device Verification
-// Progressive Chat v0.3.0
-#include "progressive/json_parser.hpp"
+// PCP v0.3.0
+#include "pcp/json_parser.hpp"
 #include <string>
 #include <vector>
 #include <sstream>
@@ -8,9 +8,9 @@
 #include <map>
 #include <chrono>
 
-using progressive::parseJsonStringValue;
-using progressive::parseJsonBoolValue;
-using progressive::parseJsonInt64Value;
+using pcp::parseJsonStringValue;
+using pcp::parseJsonBoolValue;
+using pcp::parseJsonInt64Value;
 
 std::string dver_Init(const std::string& json) {
     if (json.empty()) return R"({"ok":false,"fn":"dver_Init"})";
@@ -357,143 +357,143 @@ std::string dver_Filter(const std::string& json) {
     return o.str();
 }
 
-// DOC 0000: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0001: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0002: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0003: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0004: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0005: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0006: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0007: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0008: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0009: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0010: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0011: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0012: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0013: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0014: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0015: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0016: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0017: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0018: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0019: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0020: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0021: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0022: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0023: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0024: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0025: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0026: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0027: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0028: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0029: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0030: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0031: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0032: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0033: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0034: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0035: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0036: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0037: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0038: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0039: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0040: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0041: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0042: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0043: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0044: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0045: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0046: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0047: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0048: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0049: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0050: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0051: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0052: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0053: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0054: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0055: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0056: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0057: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0058: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0059: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0060: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0061: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0062: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0063: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0064: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0065: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0066: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0067: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0068: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0069: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0070: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0071: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0072: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0073: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0074: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0075: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0076: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0077: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0078: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0079: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0080: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0081: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0082: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0083: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0084: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0085: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0086: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0087: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0088: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0089: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0090: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0091: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0092: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0093: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0094: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0095: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0096: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0097: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0098: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0099: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0100: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0101: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0102: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0103: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0104: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0105: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0106: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0107: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0108: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0109: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0110: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0111: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0112: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0113: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0114: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0115: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0116: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0117: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0118: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0119: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0120: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0121: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0122: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0123: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0124: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0125: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0126: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0127: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0128: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0129: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0130: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0131: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0132: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0133: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0134: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0135: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0136: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0137: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0138: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0139: Device Verification implementation note for Progressive Chat v0.3.0 Matrix protocol
+// DOC 0000: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0001: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0002: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0003: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0004: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0005: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0006: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0007: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0008: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0009: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0010: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0011: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0012: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0013: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0014: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0015: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0016: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0017: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0018: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0019: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0020: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0021: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0022: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0023: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0024: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0025: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0026: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0027: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0028: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0029: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0030: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0031: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0032: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0033: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0034: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0035: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0036: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0037: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0038: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0039: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0040: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0041: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0042: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0043: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0044: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0045: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0046: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0047: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0048: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0049: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0050: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0051: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0052: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0053: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0054: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0055: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0056: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0057: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0058: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0059: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0060: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0061: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0062: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0063: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0064: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0065: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0066: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0067: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0068: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0069: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0070: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0071: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0072: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0073: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0074: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0075: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0076: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0077: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0078: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0079: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0080: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0081: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0082: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0083: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0084: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0085: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0086: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0087: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0088: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0089: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0090: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0091: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0092: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0093: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0094: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0095: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0096: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0097: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0098: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0099: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0100: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0101: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0102: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0103: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0104: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0105: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0106: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0107: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0108: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0109: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0110: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0111: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0112: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0113: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0114: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0115: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0116: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0117: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0118: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0119: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0120: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0121: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0122: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0123: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0124: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0125: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0126: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0127: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0128: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0129: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0130: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0131: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0132: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0133: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0134: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0135: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0136: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0137: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0138: Device Verification implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0139: Device Verification implementation note for PCP v0.3.0 Matrix protocol

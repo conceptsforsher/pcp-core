@@ -1,6 +1,6 @@
 // presence_tracker.cpp — Presence Tracker
-// Progressive Chat v0.3.0
-#include "progressive/json_parser.hpp"
+// PCP v0.3.0
+#include "pcp/json_parser.hpp"
 #include <string>
 #include <vector>
 #include <sstream>
@@ -8,9 +8,9 @@
 #include <map>
 #include <chrono>
 
-using progressive::parseJsonStringValue;
-using progressive::parseJsonBoolValue;
-using progressive::parseJsonInt64Value;
+using pcp::parseJsonStringValue;
+using pcp::parseJsonBoolValue;
+using pcp::parseJsonInt64Value;
 
 std::string pres_Init(const std::string& json) {
     if (json.empty()) return R"({"ok":false,"fn":"pres_Init"})";
@@ -357,143 +357,143 @@ std::string pres_Filter(const std::string& json) {
     return o.str();
 }
 
-// DOC 0000: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0001: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0002: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0003: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0004: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0005: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0006: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0007: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0008: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0009: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0010: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0011: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0012: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0013: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0014: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0015: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0016: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0017: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0018: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0019: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0020: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0021: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0022: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0023: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0024: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0025: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0026: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0027: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0028: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0029: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0030: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0031: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0032: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0033: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0034: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0035: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0036: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0037: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0038: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0039: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0040: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0041: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0042: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0043: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0044: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0045: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0046: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0047: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0048: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0049: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0050: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0051: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0052: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0053: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0054: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0055: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0056: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0057: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0058: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0059: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0060: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0061: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0062: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0063: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0064: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0065: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0066: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0067: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0068: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0069: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0070: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0071: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0072: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0073: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0074: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0075: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0076: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0077: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0078: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0079: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0080: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0081: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0082: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0083: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0084: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0085: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0086: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0087: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0088: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0089: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0090: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0091: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0092: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0093: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0094: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0095: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0096: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0097: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0098: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0099: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0100: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0101: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0102: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0103: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0104: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0105: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0106: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0107: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0108: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0109: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0110: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0111: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0112: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0113: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0114: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0115: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0116: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0117: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0118: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0119: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0120: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0121: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0122: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0123: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0124: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0125: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0126: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0127: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0128: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0129: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0130: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0131: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0132: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0133: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0134: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0135: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0136: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0137: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0138: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
-// DOC 0139: Presence Tracker implementation note for Progressive Chat v0.3.0 Matrix protocol
+// DOC 0000: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0001: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0002: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0003: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0004: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0005: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0006: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0007: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0008: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0009: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0010: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0011: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0012: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0013: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0014: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0015: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0016: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0017: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0018: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0019: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0020: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0021: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0022: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0023: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0024: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0025: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0026: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0027: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0028: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0029: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0030: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0031: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0032: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0033: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0034: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0035: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0036: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0037: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0038: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0039: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0040: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0041: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0042: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0043: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0044: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0045: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0046: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0047: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0048: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0049: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0050: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0051: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0052: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0053: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0054: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0055: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0056: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0057: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0058: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0059: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0060: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0061: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0062: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0063: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0064: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0065: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0066: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0067: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0068: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0069: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0070: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0071: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0072: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0073: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0074: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0075: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0076: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0077: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0078: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0079: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0080: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0081: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0082: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0083: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0084: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0085: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0086: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0087: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0088: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0089: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0090: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0091: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0092: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0093: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0094: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0095: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0096: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0097: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0098: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0099: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0100: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0101: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0102: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0103: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0104: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0105: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0106: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0107: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0108: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0109: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0110: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0111: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0112: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0113: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0114: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0115: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0116: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0117: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0118: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0119: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0120: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0121: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0122: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0123: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0124: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0125: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0126: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0127: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0128: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0129: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0130: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0131: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0132: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0133: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0134: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0135: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0136: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0137: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0138: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol
+// DOC 0139: Presence Tracker implementation note for PCP v0.3.0 Matrix protocol

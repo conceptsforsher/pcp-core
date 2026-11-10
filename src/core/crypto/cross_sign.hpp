@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 struct CrossSigningKeys {
     std::string masterPub, masterPriv;
@@ -70,4 +70,4 @@ std::vector<DeviceTrustResult> computeDeviceTrust(const std::string& keysQueryJs
                                                   const std::string& ourUserId = "",
                                                   const std::string& ourUskPub = "");
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

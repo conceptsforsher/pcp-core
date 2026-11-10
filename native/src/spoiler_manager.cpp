@@ -1,8 +1,8 @@
-#include "progressive/spoiler_manager.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/spoiler_manager.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 // ====== Constructor ======
 
@@ -214,4 +214,4 @@ std::string SpoilerManager::configToJson() const {
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

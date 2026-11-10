@@ -1,9 +1,9 @@
-#include "progressive/sync_status_utils.hpp"
-#include "progressive/json_parser.hpp"
+#include "pcp/sync_status_utils.hpp"
+#include "pcp/json_parser.hpp"
 #include <sstream>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 SyncState parseSyncState(const std::string& stateStr) {
     auto s = stateStr;
@@ -124,4 +124,4 @@ SyncState parseSyncMetadata(const std::string& json, int64_t& outCompleted, int6
     return state;
 }
 
-} // namespace progressive
+} // namespace pcp

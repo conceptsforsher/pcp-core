@@ -1,10 +1,10 @@
-#include "progressive/draft_manager.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/draft_manager.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <chrono>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 // ---- DraftManager ----
 
@@ -134,4 +134,4 @@ std::string formatTypingText(const std::vector<std::string>& names) {
     return std::to_string(names.size()) + " people are typing...";
 }
 
-} // namespace progressive
+} // namespace pcp

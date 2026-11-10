@@ -1,5 +1,5 @@
-#include "progressive/event_highlight_display.hpp"
-#include "progressive/json_parser.hpp"
+#include "pcp/event_highlight_display.hpp"
+#include "pcp/json_parser.hpp"
 #include <string>
 #include <sstream>
 #include <regex>
@@ -8,9 +8,9 @@
 #include <vector>
 #include <map>
 
-using progressive::parseJsonStringValue;
-using progressive::parseJsonBoolValue;
-using progressive::parseJsonInt64Value;
+using pcp::parseJsonStringValue;
+using pcp::parseJsonBoolValue;
+using pcp::parseJsonInt64Value;
 
 std::string getHighlightColor(const std::string& json) {
     std::ostringstream o;

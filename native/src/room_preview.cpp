@@ -1,7 +1,7 @@
-#include "progressive/room_preview.hpp"
+#include "pcp/room_preview.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 static std::string extractField(const std::string& json, const std::string& key) {
     auto p = json.find("\"" + key + "\":\"");
@@ -74,4 +74,4 @@ std::string roomPreviewToJson(const RoomPreview& p) {
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

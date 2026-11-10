@@ -1,10 +1,10 @@
-#include "progressive/chat_tools.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/chat_tools.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <chrono>
 
-namespace progressive {
+namespace pcp {
 
 // ---- UserHideManager ----
 
@@ -336,4 +336,4 @@ std::string contextToJson(const ChatToolContext& ctx) {
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

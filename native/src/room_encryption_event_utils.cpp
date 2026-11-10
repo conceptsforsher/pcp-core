@@ -1,7 +1,7 @@
-#include "progressive/room_encryption_event_utils.hpp"
+#include "pcp/room_encryption_event_utils.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 RoomEncryptionConfig parseRoomEncryption(const std::string& json) {
     RoomEncryptionConfig c;
@@ -22,4 +22,4 @@ std::string buildRoomEncryptionEvent(const RoomEncryptionConfig& cfg) {
 std::string formatEncryptionConfig(const RoomEncryptionConfig& cfg) {
     return "Encrypted with " + cfg.algorithm;
 }
-} // namespace progressive
+} // namespace pcp

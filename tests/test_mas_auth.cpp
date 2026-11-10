@@ -1,6 +1,6 @@
 // tests/test_mas_auth.cpp — native MAS support: pure-function unit tests.
 // Exercises the browser-free MAS helpers (no network — all decision/builders).
-#include "progressive/mas_auth.hpp"
+#include "pcp/mas_auth.hpp"
 
 #include <cctype>
 #include <cstdio>
@@ -29,7 +29,7 @@ const char* kMasLoginFlows = R"({
 })";
 
 void testDetectMas() {
-    auto caps = progressive::masParseLoginFlows(kMasLoginFlows, "https://hs.example");
+    auto caps = pcp::masParseLoginFlows(kMasLoginFlows, "https://hs.example");
     CHECK(caps.reachable, "reachable true");
     CHECK(caps.supportsPassword, "advertises m.login.password");
     CHECK(caps.supportsSso, "advertises m.login.sso");
@@ -40,7 +40,7 @@ void testDetectMas() {
 
 void testDetectPlainSynapse() {
     // A non-MAS homeserver: SSO without oauth_aware_preferred.
-    auto caps = progressive::masParseLoginFlows(
+    auto caps = pcp::masParseLoginFlows(
         R"({"flows":[{"type":"m.login.password"},{"type":"m.login.sso"}]})", "https://x");
     CHECK(caps.supportsPassword, "password still advertised");
     CHECK(caps.supportsSso, "sso advertised");
@@ -48,18 +48,18 @@ void testDetectPlainSynapse() {
 }
 
 void testClientSecret() {
-    std::string s = progressive::masGenerateClientSecret();
+    std::string s = pcp::masGenerateClientSecret();
     CHECK(s.size() == 43, "client secret is 43 chars");
     for (char c : s) {
         bool ok = std::isalnum(static_cast<unsigned char>(c)) || c == '-' || c == '.' || c == '_';
         CHECK(ok, "client secret uses unreserved charset");
     }
-    CHECK(progressive::masGenerateClientSecret() != progressive::masGenerateClientSecret() ||
+    CHECK(pcp::masGenerateClientSecret() != pcp::masGenerateClientSecret() ||
               true, "generate is best-effort unique");
 }
 
 void testCaptchaFallbackUrl() {
-    std::string url = progressive::masCaptchaFallbackUrl(
+    std::string url = pcp::masCaptchaFallbackUrl(
         "https://hs.example/", "m.login.recaptcha", "sess abc");
     CHECK(url.find("https://hs.example/_matrix/client/v3/auth/m.login.recaptcha/fallback/web") == 0,
           "fallback path correct");
@@ -68,24 +68,24 @@ void testCaptchaFallbackUrl() {
 }
 
 void testEmailIdentityAuthDict() {
-    std::string d = progressive::masEmailIdentityAuthDict("SID1", "SECRET", "sess9");
+    std::string d = pcp::masEmailIdentityAuthDict("SID1", "SECRET", "sess9");
     CHECK(d.find("\"type\":\"m.login.email.identity\"") != std::string::npos, "type present");
     CHECK(d.find("\"sid\":\"SID1\"") != std::string::npos, "sid present");
     CHECK(d.find("\"client_secret\":\"SECRET\"") != std::string::npos, "client_secret present");
     CHECK(d.find("\"session\":\"sess9\"") != std::string::npos, "session present");
 
-    std::string noSess = progressive::masEmailIdentityAuthDict("SID1", "SECRET", "");
+    std::string noSess = pcp::masEmailIdentityAuthDict("SID1", "SECRET", "");
     CHECK(noSess.find("session") == std::string::npos, "no session when empty");
 }
 
 void testDeviceEndpoints() {
-    CHECK(progressive::masTokenEndpoint("https://auth.example") ==
+    CHECK(pcp::masTokenEndpoint("https://auth.example") ==
               "https://auth.example/oauth2/token",
           "token endpoint derived");
-    CHECK(progressive::masDeviceAuthorizationEndpoint("https://auth.example") ==
+    CHECK(pcp::masDeviceAuthorizationEndpoint("https://auth.example") ==
               "https://auth.example/oauth2/device_authorization",
           "device endpoint derived");
-    CHECK(progressive::masTokenEndpoint("https://auth.example/oauth2") ==
+    CHECK(pcp::masTokenEndpoint("https://auth.example/oauth2") ==
               "https://auth.example/oauth2/token",
           "token endpoint appended after /oauth2");
 }
@@ -100,12 +100,12 @@ const char* kXmrRegister = R"({
 void testBeginRegistrationParse() {
     // masBeginRegistration is a network call; replicate its parsing via the same
     // primitives by exercising masCaptchaFallbackUrl + the documented flow.
-    progressive::MasRegistrationBegin r;
+    pcp::MasRegistrationBegin r;
     r.session = "HCmltiZeipjfLtWVXrZQqLKF";
     r.needsCaptcha = true;
     r.needsEmail = true;
     r.captchaPublicKey = "6LcFS-UgAAAAAK3WQdnMnwUFaxyLa9rLcWB4tNgy";
-    r.captchaFallbackUrl = progressive::masCaptchaFallbackUrl(
+    r.captchaFallbackUrl = pcp::masCaptchaFallbackUrl(
         "https://xmr.se", "m.login.recaptcha", r.session);
 
     CHECK(r.needsCaptcha && r.needsEmail, "xmr.se requires captcha + email");

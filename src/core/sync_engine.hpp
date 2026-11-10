@@ -1,7 +1,7 @@
 // src/core/sync_engine.hpp — background /sync loop with backoff.
 //
 // Runs on a dedicated worker thread. Calls MatrixClient::syncFast() repeatedly
-// (simdjson-based zero-copy parse, 50-200x faster than progressive_native's
+// (simdjson-based zero-copy parse, 50-200x faster than pcp_native's
 // hand-rolled parser), emits signals when new events arrive or state changes.
 // Exponential backoff on error. Persists the since-token after each successful sync.
 
@@ -27,7 +27,7 @@
 #include <string>
 #include <thread>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 enum class SyncEngineState {
     Stopped,
@@ -238,4 +238,4 @@ private:
     static constexpr std::chrono::seconds kFallbackForgetDelay{300};
 };
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

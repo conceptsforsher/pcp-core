@@ -8,7 +8,7 @@
 #include <cstring>
 #include <execinfo.h>
 
-namespace progressive::crash {
+namespace pcp::crash {
 
 inline void installCrashHandler(bool quiet = false) {
     static auto handler = [](int sig) -> void {
@@ -50,7 +50,7 @@ inline void installCrashHandler(bool quiet = false) {
 } // namespace
 
 #else
-namespace progressive::crash {
+namespace pcp::crash {
 inline void installCrashHandler() {
     std::fprintf(stderr, "[crash] handler not installed (non-Linux platform)\n");
 }

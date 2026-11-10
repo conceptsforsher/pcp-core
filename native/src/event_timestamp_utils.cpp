@@ -1,9 +1,9 @@
-#include "progressive/event_timestamp_utils.hpp"
+#include "pcp/event_timestamp_utils.hpp"
 #include <chrono>
 #include <ctime>
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 int64_t getCurrentTimeMs() {
     return std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -68,4 +68,4 @@ bool isRecent(int64_t ms, int minutes) {
     return (getCurrentTimeMs() - ms) < (minutes * 60000LL);
 }
 
-} // namespace progressive
+} // namespace pcp

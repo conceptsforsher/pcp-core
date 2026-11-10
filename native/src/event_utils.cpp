@@ -1,8 +1,8 @@
-#include "progressive/event_utils.hpp"
+#include "pcp/event_utils.hpp"
 #include <algorithm>
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 // ==== Event Summary ====
 
@@ -477,4 +477,4 @@ std::string formatGuestAccessNotice(const std::string& senderName, bool guestsAl
 
 
 
-} // namespace progressive
+} // namespace pcp

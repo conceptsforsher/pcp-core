@@ -8,7 +8,7 @@
 #include <vector>
 #include <simdjson.h>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 namespace {
 
@@ -205,4 +205,4 @@ std::vector<DeviceTrustResult> computeDeviceTrust(const std::string& keysQueryJs
     return results;
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

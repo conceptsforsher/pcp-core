@@ -1,10 +1,10 @@
-#include "progressive/room_summary_formatter.hpp"
-#include "progressive/json_parser.hpp"
+#include "pcp/room_summary_formatter.hpp"
+#include "pcp/json_parser.hpp"
 #include <sstream>
 #include <chrono>
 #include <ctime>
 
-namespace progressive {
+namespace pcp {
 
 static std::string formatTimestamp(int64_t ms) {
     time_t t = ms / 1000;
@@ -173,4 +173,4 @@ std::string formatRoomDetailString(const RoomSummaryDisplay& s) {
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

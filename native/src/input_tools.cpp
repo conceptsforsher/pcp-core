@@ -1,10 +1,10 @@
-#include "progressive/input_tools.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/input_tools.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <cctype>
 
-namespace progressive {
+namespace pcp {
 
 // ---- SymbolBar ----
 
@@ -244,4 +244,4 @@ void ReplacementEngine::clear() {
     rules_.clear();
 }
 
-} // namespace progressive
+} // namespace pcp

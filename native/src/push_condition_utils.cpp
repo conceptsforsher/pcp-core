@@ -1,8 +1,8 @@
-#include "progressive/push_condition_utils.hpp"
+#include "pcp/push_condition_utils.hpp"
 #include <sstream>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 PushConditionKind conditionKindFromString(const std::string& s) {
     if (s == "event_match") return PushConditionKind::EVENT_MATCH;
@@ -92,4 +92,4 @@ std::string formatPushCondition(const PushCondition& cond) {
     return "Unknown";
 }
 
-} // namespace progressive
+} // namespace pcp

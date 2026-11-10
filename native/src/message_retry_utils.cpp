@@ -1,6 +1,6 @@
-#include "progressive/message_retry_utils.hpp"
+#include "pcp/message_retry_utils.hpp"
 #include <sstream>
-namespace progressive {
+namespace pcp {
 bool shouldRetryMessage(const std::string& code, int count, int max) {
     return count < max && code != "M_FORBIDDEN" && code != "M_UNKNOWN_TOKEN" && code != "M_BAD_JSON";
 }

@@ -1,10 +1,10 @@
-#include "progressive/spellcheck.hpp"
+#include "pcp/spellcheck.hpp"
 #include <sstream>
 #include <algorithm>
 #include <cctype>
 #include <cmath>
 
-namespace progressive {
+namespace pcp {
 
 // Helper: safe tolower for unsigned char (avoids UB on negative values)
 static inline char safeToLower(char c) {
@@ -253,4 +253,4 @@ bool looksTypo(const std::string& word) {
     return false;
 }
 
-} // namespace progressive
+} // namespace pcp

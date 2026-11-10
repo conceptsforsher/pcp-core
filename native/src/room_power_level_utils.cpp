@@ -1,6 +1,6 @@
-#include "progressive/room_power_level_utils.hpp"
+#include "pcp/room_power_level_utils.hpp"
 
-namespace progressive {
+namespace pcp {
 
 static int extractInt(const std::string& json, const std::string& key, int defaultVal = 0) {
     auto search = "\"" + key + "\":";
@@ -139,4 +139,4 @@ std::string formatSuggestedRole(int powerLevel) {
     return "User";
 }
 
-} // namespace progressive
+} // namespace pcp

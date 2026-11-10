@@ -1,7 +1,7 @@
-#include "progressive/spoiler_utils.hpp"
+#include "pcp/spoiler_utils.hpp"
 #include <regex>
 
-namespace progressive {
+namespace pcp {
 
 SpoilerMatch parseSpoilerFromHtml(const std::string& html) {
     SpoilerMatch match;
@@ -48,4 +48,4 @@ std::string formatSpoilerPlain(const std::string& content, const std::string& re
     return "(spoiler: " + reason + ") " + content;
 }
 
-} // namespace progressive
+} // namespace pcp

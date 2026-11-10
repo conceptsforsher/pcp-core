@@ -6,7 +6,7 @@
 #include "../debug_log.hpp"
 #include <simdjson.h>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 void VerificationController::setVerificationManager(VerificationManager* vm) {
     vm_ = vm;
@@ -174,4 +174,4 @@ void VerificationController::cancelVerification(const std::string& txnId,
     vm_->removeTransaction(txnId);
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <cstdint>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 const std::vector<VerificationEmoji>& sasEmojiTable() {
     static const std::vector<VerificationEmoji> table = {
@@ -88,4 +88,4 @@ std::string formatSasEmojis(const std::vector<VerificationEmoji>& emojis) {
     return out.str();
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

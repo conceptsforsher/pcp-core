@@ -4,7 +4,7 @@
 #pragma once
 #include <string>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 struct BackupVersionInfo {
     std::string version;     // server-assigned version id
@@ -36,4 +36,4 @@ std::string decryptBackupSessionData(const std::string& sessionDataJson,
 std::string buildBackupSessionEntry(const std::string& sessionDataJson,
                                     int firstMessageIndex);
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

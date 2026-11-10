@@ -1,8 +1,8 @@
-#include "progressive/notif_settings.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/notif_settings.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 NotifDecision computeNotifDecision(
     const RoomNotifSettings& roomSettings,
@@ -131,4 +131,4 @@ NotifMode getDefaultModeForRoom(bool isDirect, bool isEncrypted) {
     return NotifMode::All;
 }
 
-} // namespace progressive
+} // namespace pcp

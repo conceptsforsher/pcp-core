@@ -1,11 +1,11 @@
-#include "progressive/network_monitor.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/network_monitor.hpp"
+#include "pcp/string_utils.hpp"
 #include <vector>
 #include <sstream>
 #include <chrono>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 
 NetworkQuality computeNetworkQuality(
     NetworkType type, bool connected, bool metered, bool roaming,
@@ -147,4 +147,4 @@ bool isBandwidthSufficient(double bandwidthKbps, double requiredKbps, double mar
     return bandwidthKbps >= requiredKbps * (1.0 + margin);
 }
 
-} // namespace progressive
+} // namespace pcp

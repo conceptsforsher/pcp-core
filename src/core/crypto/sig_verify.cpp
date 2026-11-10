@@ -4,7 +4,7 @@
 #include "../debug_log.hpp"
 #include <sstream>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 std::string buildDeviceKeysCanonical(const std::string& userId,
                                        const std::string& deviceId,
@@ -52,4 +52,4 @@ bool verifyOtk(const std::string& deviceEd25519Key,
     return ed25519Verify(deviceEd25519Key, canonical, signatureBase64);
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

@@ -1,6 +1,6 @@
-#include "progressive/room_favorite_utils.hpp"
+#include "pcp/room_favorite_utils.hpp"
 #include <sstream>
-namespace progressive {
+namespace pcp {
 std::string buildFavoriteTag(bool fav, double order) {
     std::ostringstream os; os << R"({"tags":{"m.favourite":{}})"; if(order>0)os<<R"(,"order":)"<<order; os<<"}"; return os.str();
 }

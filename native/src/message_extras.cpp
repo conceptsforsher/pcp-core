@@ -1,6 +1,6 @@
-#include "progressive/message_extras.hpp"
+#include "pcp/message_extras.hpp"
 
-namespace progressive {
+namespace pcp {
 
 // ==== JSON Helpers ====
 
@@ -573,4 +573,4 @@ ElementCallNotifyContent parseCallNotifyContent(const std::string& json) {
     return c;
 }
 
-} // namespace progressive
+} // namespace pcp

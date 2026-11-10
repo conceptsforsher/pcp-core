@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 // One reaction on a message (m.reaction).
 struct ReactionData {
@@ -86,4 +86,4 @@ struct RoomData {
     bool anchored = false; // anchored rooms stay in the second band (user-set)
 };
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

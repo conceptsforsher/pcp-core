@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 namespace {
 static const char kB58[] =
@@ -114,4 +114,4 @@ BackupKeyPair deriveBackupKey(const std::vector<uint8_t>& seed) {
     return pair;
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

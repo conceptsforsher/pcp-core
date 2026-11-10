@@ -1,5 +1,5 @@
-#include "progressive/user_badge_utils.hpp"
-#include "progressive/json_parser.hpp"
+#include "pcp/user_badge_utils.hpp"
+#include "pcp/json_parser.hpp"
 #include <string>
 #include <sstream>
 #include <regex>
@@ -8,9 +8,9 @@
 #include <vector>
 #include <map>
 
-using progressive::parseJsonStringValue;
-using progressive::parseJsonBoolValue;
-using progressive::parseJsonInt64Value;
+using pcp::parseJsonStringValue;
+using pcp::parseJsonBoolValue;
+using pcp::parseJsonInt64Value;
 
 std::string getUserBadge(const std::string& json) {
     std::ostringstream o;

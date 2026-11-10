@@ -1,7 +1,7 @@
-#include "progressive/message_content.hpp"
+#include "pcp/message_content.hpp"
 #include <cstring>
 
-namespace progressive {
+namespace pcp {
 
 // ==== JSON Extraction Helpers ====
 
@@ -453,4 +453,4 @@ MessageContentStats computeContentStats(const std::vector<std::string>& eventBod
     return stats;
 }
 
-} // namespace progressive
+} // namespace pcp

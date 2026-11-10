@@ -9,13 +9,13 @@
 
 //
 // Compile-time toggles (set via CMake -D flags, optional):
-//   PROGRESSIVE_DISABLE_ASSERT  — removes all PROGRESSIVE_ASSERT checks
-//   PROGRESSIVE_DISABLE_LOG     — removes all LOG() output
+//   PCP_DISABLE_ASSERT  — removes all PCP_ASSERT checks
+//   PCP_DISABLE_LOG     — removes all LOG() output
 // By default (no flags): everything is ON for debug builds.
 //
 
-#ifndef PROGRESSIVE_DISABLE_ASSERT
-#define PROGRESSIVE_ASSERT(cond, msg) \
+#ifndef PCP_DISABLE_ASSERT
+#define PCP_ASSERT(cond, msg) \
     do { \
         if (!(cond)) { \
             std::fprintf(stderr, "[ASSERT] %s:%d: FAILED %s — %s\n", \
@@ -24,7 +24,7 @@
         } \
     } while(0)
 #else
-#define PROGRESSIVE_ASSERT(cond, msg) ((void)0)
+#define PCP_ASSERT(cond, msg) ((void)0)
 #endif
 
 enum class LogChannel {
@@ -36,7 +36,7 @@ enum class LogChannel {
     DBG
 };
 
-#ifndef PROGRESSIVE_DISABLE_LOG
+#ifndef PCP_DISABLE_LOG
 #define LOG(ch, fmt, ...) \
     do { \
         char pdcBuf[1024]; \
@@ -52,7 +52,7 @@ enum class LogChannel {
             case LogChannel::MEM:  std::fprintf(stderr, "[MEM]  %s\n", pdcBuf); break; \
             case LogChannel::DBG:  std::fprintf(stderr, "[DBG]  %s\n", pdcBuf); break; \
         } \
-        ::progressive::logToRing(ch, std::string(pdcBuf)); \
+        ::pcp::logToRing(ch, std::string(pdcBuf)); \
     } while(0)
 #else
 #define LOG(ch, fmt, ...) ((void)0)
@@ -62,7 +62,7 @@ enum class LogChannel {
 // In-app log ring buffer (Qt-free). The LOG() macro mirrors every line here;
 // the UI log viewer (LogViewerDialog) shows this instead of the console.
 //
-namespace progressive {
+namespace pcp {
 
 struct LogLine {
     LogChannel channel;
@@ -109,7 +109,7 @@ inline const char* logChannelName(LogChannel ch) {
     return "?";
 }
 
-}  // namespace progressive
+}  // namespace pcp
 
 class TraceFn {
     const char* name_;

@@ -1,11 +1,11 @@
-#include "progressive/user_rating.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/user_rating.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <chrono>
 #include <set>
 
-namespace progressive {
+namespace pcp {
 
 double normalizeValue(int value, int maxValue) {
     if (maxValue <= 0) return 0.0;
@@ -166,4 +166,4 @@ std::string leaderboardToText(const RoomLeaderboard& board, int topN) {
     return out.str();
 }
 
-} // namespace progressive
+} // namespace pcp

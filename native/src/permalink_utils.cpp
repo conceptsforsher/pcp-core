@@ -1,7 +1,7 @@
-#include "progressive/permalink_utils.hpp"
+#include "pcp/permalink_utils.hpp"
 #include <regex>
 
-namespace progressive {
+namespace pcp {
 
 std::string buildMatrixLink(const std::string& type, const std::string& id) {
     return "https://matrix.to/#/" + type + "/" + id;
@@ -70,4 +70,4 @@ std::string formatPermalink(const std::string& url, const std::string& label) {
     return "[" + label + "](" + url + ")";
 }
 
-} // namespace progressive
+} // namespace pcp

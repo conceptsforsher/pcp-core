@@ -8,7 +8,7 @@
 #include <cstring>
 #include <sstream>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 SessionStore::SessionStore() = default;
 
@@ -720,4 +720,4 @@ std::vector<std::string> SessionStore::loadHiddenRooms() {
     return result;
 }
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

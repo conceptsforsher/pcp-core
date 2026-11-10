@@ -1,8 +1,8 @@
-#include "progressive/user_search_utils.hpp"
+#include "pcp/user_search_utils.hpp"
 #include <sstream>
 #include <algorithm>
 
-namespace progressive {
+namespace pcp {
 static std::string toLower(const std::string& s) { std::string r; std::transform(s.begin(), s.end(), std::back_inserter(r), ::tolower); return r; }
 
 double scoreUserMatch(const std::string& name, const std::string& uid, const std::string& query) {
@@ -20,4 +20,4 @@ std::vector<UserSearchMatch> fuzzySearchUsers(const std::vector<UserSearchMatch>
 std::string formatUserMatch(const UserSearchMatch& m) {
     return (m.displayName.empty() ? m.userId : m.displayName);
 }
-} // namespace progressive
+} // namespace pcp

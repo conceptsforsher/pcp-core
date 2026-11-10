@@ -1,7 +1,7 @@
-#include "progressive/event_id_utils.hpp"
+#include "pcp/event_id_utils.hpp"
 #include <regex>
 
-namespace progressive {
+namespace pcp {
 
 bool validateEventId(const std::string& eventId) {
     if (eventId.empty() || eventId[0] != '$') return false;
@@ -47,4 +47,4 @@ std::string buildEventId(const std::string& serverName) {
     return "$event:" + serverName;
 }
 
-} // namespace progressive
+} // namespace pcp

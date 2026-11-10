@@ -1,11 +1,11 @@
-#include "progressive/offline_cache.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/offline_cache.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <cmath>
 #include <ctime>
 
-namespace progressive {
+namespace pcp {
 
 // ==== Priority Computation ====
 
@@ -442,4 +442,4 @@ std::string OfflineCacheManager::pressureToJson(CachePressure pressure) const {
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

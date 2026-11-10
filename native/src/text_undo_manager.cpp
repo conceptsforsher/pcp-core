@@ -1,10 +1,10 @@
-#include "progressive/text_undo_manager.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/text_undo_manager.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <algorithm>
 #include <ctime>
 
-namespace progressive {
+namespace pcp {
 
 // ====== Constructor ======
 
@@ -195,4 +195,4 @@ std::string TextUndoManager::configToJson() const {
     return os.str();
 }
 
-} // namespace progressive
+} // namespace pcp

@@ -1,8 +1,8 @@
 // src/core/matrix_client.hpp — Matrix Client-Server API client.
 //
-// Wraps the desktop libcurl HTTP client + the progressive_native parsers
+// Wraps the desktop libcurl HTTP client + the pcp_native parsers
 // (login_flow, well_known, matrix_error, sync_models, auth_models).
-// The actual JSON parsing is delegated to progressive_native's Tier-A real
+// The actual JSON parsing is delegated to pcp_native's Tier-A real
 // modules — we only build the HTTP request and parse the response.
 
 #pragma once
@@ -12,11 +12,11 @@
 #include "session_store.hpp"
 #include "fast_sync.hpp"
 
-#include <progressive/auth_models.hpp>
-#include <progressive/login_flow.hpp>
-#include <progressive/matrix_error.hpp>
-#include <progressive/sync_models.hpp>
-#include <progressive/well_known.hpp>
+#include <pcp/auth_models.hpp>
+#include <pcp/login_flow.hpp>
+#include <pcp/matrix_error.hpp>
+#include <pcp/sync_models.hpp>
+#include <pcp/well_known.hpp>
 
 #include <string>
 #include <unordered_map>
@@ -25,7 +25,7 @@
 #include <atomic>
 #include <memory>
 
-namespace progressive::desktop {
+namespace pcp::desktop {
 
 // Unique transaction-id for /send calls (time + counter — never collides
 // within a second, unlike a bare timestamp).
@@ -36,7 +36,7 @@ template <typename T>
 struct ApiResult {
     bool ok = false;
     T data{};
-    progressive::MatrixError error;          // populated if !ok
+    pcp::MatrixError error;          // populated if !ok
     int httpStatus = 0;
 };
 
@@ -73,8 +73,8 @@ public:
     ApiResult<std::string> getVersions();
 
     // GET /_matrix/client/v3/login — list supported login flows.
-    // Uses parseLoginFlows() from progressive_native/login_flow.cpp.
-    ApiResult<progressive::LoginAuthFlowsResult> getLoginFlows();
+    // Uses parseLoginFlows() from pcp_native/login_flow.cpp.
+    ApiResult<pcp::LoginAuthFlowsResult> getLoginFlows();
 
     // POST /_matrix/client/v3/login with m.login.password.
     // Uses parseCredentials() (we do it here, response is small JSON).
@@ -103,7 +103,7 @@ public:
 
     // GET /_matrix/client/v3/rooms/{roomId}/messages?dir=b&from=...&limit=...
     // Returns raw JSON (chunk of events + end token). The caller parses with
-    // progressive::parseSyncResponse or similar — kept simple for Phase 2.
+    // pcp::parseSyncResponse or similar — kept simple for Phase 2.
     // Returns: { "chunk": [...], "end": "..." } as raw JSON string.
     ApiResult<std::string> getMessages(const std::string& roomId,
                                         const std::string& from = "",
@@ -294,9 +294,9 @@ public:
     // ---- Sync ----
 
     // GET /_matrix/client/v3/sync — long-poll.
-    // Uses parseSyncResponse() from progressive_native/sync_handler.cpp
+    // Uses parseSyncResponse() from pcp_native/sync_handler.cpp
     // (which delegates to sync_models.cpp's parser).
-    ApiResult<progressive::SyncResponse> sync(const std::string& since = "",
+    ApiResult<pcp::SyncResponse> sync(const std::string& since = "",
                                                 int timeoutMs = 30000);
 
     // GET /_matrix/client/v3/sync — long-poll, fast simdjson-based parser.
@@ -306,7 +306,7 @@ public:
     struct FastSyncResult {
         bool ok = false;
         FastSyncResponse data{};
-        progressive::MatrixError error;
+        pcp::MatrixError error;
         int httpStatus = 0;
     };
     FastSyncResult syncFast(const std::string& since = "", int timeoutMs = 30000,
@@ -473,4 +473,4 @@ private:
     std::unordered_map<std::string, std::string> authHeaders() const;
 };
 
-} // namespace progressive::desktop
+} // namespace pcp::desktop

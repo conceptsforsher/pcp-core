@@ -1,9 +1,9 @@
-#include "progressive/sync_utils.hpp"
-#include "progressive/string_utils.hpp"
+#include "pcp/sync_utils.hpp"
+#include "pcp/string_utils.hpp"
 #include <sstream>
 #include <chrono>
 
-namespace progressive {
+namespace pcp {
 
 std::string buildSyncFilter(const SyncFilter& filter) {
     auto esc = [](const std::string& s) -> std::string {
@@ -149,4 +149,4 @@ SyncFilter getFilterForPreset(SyncPreset preset) {
     }
 }
 
-} // namespace progressive
+} // namespace pcp

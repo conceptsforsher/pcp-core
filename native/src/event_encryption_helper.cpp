@@ -1,7 +1,7 @@
-#include "progressive/event_encryption_helper.hpp"
+#include "pcp/event_encryption_helper.hpp"
 #include <sstream>
 
-namespace progressive {
+namespace pcp {
 
 EncryptionStatus getEncryptionStatus(const std::string& json, const std::string& deviceInfo) {
     EncryptionStatus s;
@@ -41,4 +41,4 @@ bool shouldShowEncryptionBadge(const EncryptionStatus& s) {
     return s.isEncrypted;
 }
 
-} // namespace progressive
+} // namespace pcp
